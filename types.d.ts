@@ -1,3 +1,21 @@
+export interface themeColors{
+  border: string;
+  rootBg: string;
+  rootBgContrastHover:string;
+  containerLv1: string;
+  containerLv2: string;
+  containerLv3: string;
+  containerLv4: string;
+  text: string;
+  textLight:string;
+  textDark:string;
+  textInContrast:string;
+  button: string;
+  buttonHover: string;
+  button1: string;
+  buttonHover1: string;
+}
+
 export interface NavFeaturesType {
   name: string;
   action: () => any;
@@ -14,6 +32,11 @@ export interface Skill {
   link: string;
   experienceInMonths: number;
   image: string;
+  themeColor:string;
+  bgColor:string;
+  description:string;
+  projectCount:number;
+  textColor:string;
 }
 
 export interface Contact {

@@ -4,7 +4,9 @@ import { Input } from "./ui/input";
 import { NavFeaturesType } from "@/types";
 import Link from "next/link";
 import NavFeature from "./mini-components/NavFeature";
-import { MoonIcon, SunIcon } from "lucide-react";
+import { Github, Linkedin } from "lucide-react";
+import { ProfileData } from "@/constants/data";
+import { darkTheme } from "@/hooks/useTheme";
 
 const NavFeatures: NavFeaturesType[] = [
   {
@@ -27,16 +29,40 @@ const NavFeatures: NavFeaturesType[] = [
     action: () => {},
     navigation: "/contact",
   },
+  {
+    name: "Hire",
+    action: () => {},
+    navigation: "/hire",
+  },
 ];
+
 const Navbar: React.FC = (): React.JSX.Element => {
   const [searchText, setSearchText] = useState<string>("");
-  const [theme, setTheme] = useState<"light" | "dark">("dark");
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [hovered, setHovered] = useState<{
+    no: boolean;
+  }>({
+    no: false,
+  });
+
   const handleToogleTheme = () =>
     theme === "light" ? setTheme("dark") : setTheme("light");
+
   return (
-    <div className="h-16 border-b-2 flex px-6 font-bold items-center justify-between">
+    <div
+      className="h-16 border-b-2 flex px-6 font-bold items-center justify-between"
+      style={{ color: darkTheme.text, borderBottomColor: darkTheme.border }}
+    >
       <div className="flex cursor-pointer">
-        <Link href={"/"}>Portfolio_Gomzy</Link>
+        <Link href={"/"} className="flex flex-col">
+        <span className="text-xl">{"Portfolio"}</span>
+          {/* <span className="text-xs">{"return("}</span>
+          <div>
+            <span className="text-xs">{"Portfolio."}</span>
+            <span className="text-lg">{"GomzyDhingra"}</span>
+          </div>
+          <span className="text-xs">{")"}</span> */}
+        </Link>
       </div>
       <div className="flex gap-8">
         <div>
@@ -54,13 +80,31 @@ const Navbar: React.FC = (): React.JSX.Element => {
           ))}
         </div>
       </div>
-      <div className="flex items-center gap-2 select-none">
-        <div className="px-2 py-1 border rounded-sm hover:bg-gray-200 cursor-pointer" onClick={handleToogleTheme}
-        aria-selected={false}
+      <div className="flex items-center gap-4 select-none">
+        <div className="flex gap-4 items-center justify-center">
+          <Link href={ProfileData.more.contact.github} target="_blank">
+            <Github size={26} />
+          </Link>
+          <Link href={ProfileData.more.contact.linkedin} target="_blank">
+            <Linkedin size={26} />
+          </Link>
+        </div>
+        {/* <div
+          className="px-2 py-1 border rounded-sm hover:bg-gray-200 cursor-pointer"
+          onClick={handleToogleTheme}
+          aria-selected={false}
         >
           {theme === "dark" ? <SunIcon /> : <MoonIcon />}
-        </div>
-        <div className="px-2 py-1 border rounded-sm hover:bg-gray-200 cursor-pointer">
+        </div> */}
+        <div
+          className="px-2 py-1 border rounded-sm hover:bg-gray-200 cursor-pointer"
+          style={{
+            backgroundColor: hovered.no
+              ? darkTheme.buttonHover
+              : darkTheme.rootBg,
+            color: hovered.no ? darkTheme.textInContrast : darkTheme.text,
+          }}
+        >
           <Link href={"/login"}>Login</Link>
         </div>
       </div>

@@ -70,3 +70,21 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+html::-webkit-scrollbar {
+  width: 8px;
+  transition: 0.2s ease-in;
+}
+
+html::-webkit-scrollbar-track {
+  background-color: #353535;
+}
+
+html::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}

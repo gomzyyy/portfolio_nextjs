@@ -1,13 +1,7 @@
-"use client"
-import React from 'react'
-import { useRouter } from 'next/router'
+import React from "react";
 
 function Contact() {
-  const router = useRouter()
-  const {hireAs} = router.query
-  return (
-    <div>Contact</div>
-  )
+  return <div>contact</div>;
 }
 
-export default Contact
+export default Contact;
