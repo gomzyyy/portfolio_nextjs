@@ -70,7 +70,9 @@ body {
     @apply bg-background text-foreground;
   }
 }
-
+html{
+  overflow-x: hidden;
+}
 html::-webkit-scrollbar {
   width: 8px;
   transition: 0.2s ease-in;
@@ -87,4 +89,7 @@ html::-webkit-scrollbar-thumb {
 
 html::-webkit-scrollbar-thumb:hover {
   background-color: #555;
+}
+.smooth{
+  transition: all 0.1s ease-in-out;
 }

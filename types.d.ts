@@ -1,19 +1,20 @@
-export interface themeColors{
+export interface themeColors {
   border: string;
   rootBg: string;
-  rootBgContrastHover:string;
+  rootBgContrastHover: string;
   containerLv1: string;
   containerLv2: string;
   containerLv3: string;
   containerLv4: string;
   text: string;
-  textLight:string;
-  textDark:string;
-  textInContrast:string;
+  textLight: string;
+  textDark: string;
+  textInContrast: string;
   button: string;
   buttonHover: string;
   button1: string;
   buttonHover1: string;
+  commonGreen:string;
 }
 
 export interface NavFeaturesType {
@@ -32,17 +33,19 @@ export interface Skill {
   link: string;
   experienceInMonths: number;
   image: string;
-  themeColor:string;
-  bgColor:string;
-  description:string;
-  projectCount:number;
-  textColor:string;
+  themeColor: string;
+  bgColor: string;
+  description: string;
+  projectCount: number;
+  textColor: string;
 }
 
 export interface Contact {
   email: string;
   linkedin: string;
   github: string;
+  contactNumber:string;
+  disclamer:string;
 }
 
 export interface More {
@@ -52,8 +55,8 @@ export interface More {
 
 export interface ProfileType {
   name: string;
-  action:(callback:()=>any)=>any;
-  image:({height,width}:ImageProps)=>React.JSX.Element;
+  action: (callback: () => any) => any;
+  image: ({ height, width }: ImageProps) => React.JSX.Element;
   label: string;
   dateOfBirth: string;
   bio: string;
@@ -67,4 +70,31 @@ export interface ProfileType {
     databases: Skill[];
   };
   more: More;
+}
+export interface ProjectDetailsType {
+  label: string;
+  comments: string;
+  deployed: boolean;
+  liveLink: string;
+  image: string;
+  alt: string;
+  links: {
+    githubLink1: {
+      ok: boolean;
+      link: string;
+      label: string;
+    };
+    githubLink2?: {
+      ok: boolean;
+      link: string;
+      label: string;
+    };
+  };
+  description: string;
+  completed: boolean;
+  technologiesUsed: string[];
+  credits: {
+    label?: string;
+    src?: string;
+  }[];
 }

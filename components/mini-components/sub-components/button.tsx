@@ -19,7 +19,7 @@ function Button({x}:{x:Skill}) {
           onMouseOver={()=>setHovered({st:true})}
           onMouseLeave={()=>setHovered({st:false})}
           >
-            <span>{x.name}</span>
+            <span className='font-bold'>{x.name}</span>
           </Link>
   )
 }

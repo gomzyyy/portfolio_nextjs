@@ -16,6 +16,7 @@ export const lightTheme:themeColors = {
   buttonHover: "#282f3c",
   button1: "#ffffff",
   buttonHover1: "#e5e7eb",
+  commonGreen:"#07f76b"
 };
 export const darkTheme:themeColors = {
   border: "#707070",
@@ -33,6 +34,7 @@ export const darkTheme:themeColors = {
   buttonHover: "#e5e7eb",
   button1: "#111827",
   buttonHover1: "#282f3c",
+commonGreen:"#07f76b"
 };
 export const comonColors={
   danger:"#fc5555",

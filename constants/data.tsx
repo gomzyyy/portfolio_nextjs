@@ -1,5 +1,5 @@
 import AdminProfileImage from "@/components/shared/AdminProfileImage";
-import { ImageProps, ProfileType } from "@/types";
+import { ImageProps, ProfileType, ProjectDetailsType } from "@/types";
 
 export const ProfileData: ProfileType = {
   name: "GomzyDhingra",
@@ -189,6 +189,173 @@ export const ProfileData: ProfileType = {
       email: "gomzydhingra69@gmail.com",
       linkedin: "https://www.linkedin.com/in/gomzy-dhingra-4140202b5",
       github: "https://github.com/gomzyyy",
+      contactNumber:"+91 9781295937",
+      disclamer:"While I am always eager to connect and collaborate, I kindly request that all communications remain respectful and considerate. Thank you!"
     },
   },
 };
+
+export const myProjects:ProjectDetailsType[] = [
+  {
+    label: "ChatApp in ReactJs",
+    comments: "",
+    deployed: false,
+    liveLink: "",
+    image: "/chat-icon.png",
+    alt: "ChatApp",
+    links: {
+      githubLink1: {
+        ok: true,
+        link: "https://github.com/gomzyyy/secretChat",
+        label: "Frontend",
+      },
+      githubLink2: {
+        ok: true,
+        link: "https://github.com/gomzyyy/Backend_secretChat",
+        label: "Backend",
+      },
+    },
+    description:
+      "A real-time chat application built with React, Node.js, and Socket.IO, allowing users to send and receive messages instantly.",
+    completed: true,
+    technologiesUsed: [
+      "ReactJs",
+      "Node.js",
+      "Express",
+      "Socket.IO",
+      "Redux Toolkit",
+      "Tailwind CSS",
+    ],
+    credits: [],
+  },
+  {
+    label: "Social Media App in React-Native and Expo-Go",
+    comments: "",
+    deployed: false,
+    liveLink: "",
+    image: "/expo-image.png",
+    alt: "Social Media App",
+    links: {
+      githubLink1: {
+        ok: true,
+        link: "https://github.com/gomzyyy/Pinterest_Clone",
+        label: "Frontend",
+      },
+      githubLink2: {
+        ok: true,
+        link: "https://github.com/gomzyyy/Pinterest_Clone_backend-main",
+        label: "Backend",
+      },
+    },
+    description:
+      "A multi-feature full stack social media application built using react-native expo and NodeJs; More than 16 screens and 1M+ lines of code.",
+    completed: true,
+    technologiesUsed: [
+      "React-Native",
+      "typeScript",
+      "Expo-Go",
+      "Node.js",
+      "Express",
+      "Socket.IO",
+      "Redux Toolkit",
+      "Tailwind CSS",
+    ],
+    credits: [],
+  },
+  {
+    label: "Portfolio(Old version)",
+    comments: "",
+    deployed: true,
+    liveLink: "https://remarkable-dusk-d9cdc3.netlify.app/",
+    image: "/p.png",
+    alt: "Portfolio",
+    links: {
+      githubLink1: {
+        ok: true,
+        link: "https://github.com/gomzyyy/Portfolio/tree/main/client-side",
+        label: "Frontend",
+      },
+      githubLink2: {
+        ok: true,
+        link: "https://github.com/gomzyyy/Portfolio/tree/main/backend",
+        label: "Backend",
+      },
+    },
+    description:
+      "Responsive Portfolio website in ReactJs compatible for all devices with Conversation feature implimented using Sockets.",
+    completed: true,
+    technologiesUsed: [
+      "React",
+      "Node.js",
+      "Express",
+      "Socket.IO",
+      "Redux Toolkit",
+    ],
+    credits: [],
+  },
+  {
+    label: "ToDo Mobile App using React-Native CLI",
+    comments: "",
+    deployed: false,
+    liveLink: "",
+    image: "/todo_icon.png",
+    alt: "Portfolio",
+    links: {
+      githubLink1: {
+        ok: true,
+        link: "https://github.com/gomzyyy/WhatNextTodoApp",
+        label: "Frontend",
+      },
+      githubLink2: {
+        ok: false,
+        link: "",
+        label: "Backend",
+      },
+    },
+    description:
+      "Multi-featured ToDo app built using React-Native CLI(Used in most hybrid Applications); clean UI and smooth animations enhances the user experiance.",
+    completed: true,
+    technologiesUsed: [
+      "React",
+      "Node.js",
+      "Express",
+      "Socket.IO",
+      "Redux Toolkit",
+    ],
+    credits: [],
+  },
+  {
+    label: "UI built as an Intern at 'IT MAVERICK SOLUTIONS'",
+    comments: "Deployment not allowed",
+    deployed: false,
+    liveLink: "",
+    image: "/internship-logo.png",
+    alt: "Portfolio",
+    links: {
+      githubLink1: {
+        ok: true,
+        link: "https://github.com/gomzyyy/Itms-task-master",
+        label: "Over 5+ webpages",
+      },
+      githubLink2: {
+        ok: false,
+        link: "",
+        label: "",
+      },
+    },
+    description:
+      "Built multiple webpages using my fundamentals of web development, compatible for all the devices; PC,Tab,mobile etc, during my Internship.",
+    completed: true,
+    technologiesUsed: [
+     "HTML",
+     "CSS",
+     "JavaScript"
+    ],
+    credits: [
+      {
+        label: "Certificate",
+        src: "https://drive.google.com/file/d/1cOGMciXJ9bQj0tcePQUst1xS6dwGNFsU/view?usp=drive_link",
+      },
+    ],
+  },
+];

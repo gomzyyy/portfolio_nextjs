@@ -92,13 +92,15 @@ function Profile() {
   }, [theme]);
 
   return (
-    <div className="border-2 rounded-2xl py-4 px-6 w-[40%] select-none h-fit"
-    style={{borderColor:darkTheme.border}}
+    <div
+      className="border-2 rounded-2xl lg:w-[40%] py-4 px-6 min-w-[385px] w-[80%] select-none h-fit"
+      style={{ borderColor: darkTheme.border }}
     >
       <div className="flex flex-col items-center">
         {/* Profile Container */}
-        <div className="overflow-hidden rounded-full bg-black border-[3px]"
-        style={{borderColor:darkTheme.border}}
+        <div
+          className="overflow-hidden rounded-full bg-black border-[3px]"
+          style={{ borderColor: darkTheme.border }}
         >
           {/* Profile Image */}
           {profileImg({ height: 150, width: 150 })}
@@ -119,13 +121,17 @@ function Profile() {
           <div className="flex justify-between px-6">
             {!redirecting ? (
               <select
-                className={`outline-none h-9 px-4 py-2 rounded-md font-bold hover:bg-[#282f3c] cursor-pointer border-2`}
+                className={`outline-none h-9 px-4 py-2 rounded-md font-bold hover:bg-[#282f3c] cursor-pointer border-2 smooth`}
                 style={{
                   backgroundColor: hovered.h
-                  ? darkTheme.buttonHover
-                  : darkTheme.rootBg,
-                color: hovered.h?darkTheme.rootBgContrastHover:darkTheme.buttonHover,
-                borderColor:hovered.r?darkTheme.textLight:darkTheme.buttonHover
+                    ? darkTheme.buttonHover
+                    : darkTheme.rootBg,
+                  color: hovered.h
+                    ? darkTheme.rootBgContrastHover
+                    : darkTheme.buttonHover,
+                  borderColor: hovered.r
+                    ? darkTheme.textLight
+                    : darkTheme.buttonHover,
                 }}
                 onMouseOver={() =>
                   setHovered({
@@ -156,11 +162,11 @@ function Profile() {
               </select>
             ) : (
               <div
-                className="border-2 outline-none px-4 py-1 items-center font-bold rounded-md hover:bg-[#282f3c] cursor-progress"
+                className="border-2 outline-none px-4 py-1 items-center font-bold rounded-md hover:bg-[#282f3c] smooth cursor-progress"
                 style={{
                   backgroundColor: darkTheme.rootBg,
-                color: darkTheme.buttonHover,
-                borderColor:darkTheme.buttonHover
+                  color: darkTheme.buttonHover,
+                  borderColor: darkTheme.buttonHover,
                 }}
                 onMouseOver={() =>
                   setHovered({
@@ -184,14 +190,19 @@ function Profile() {
             )}
 
             {!redirecting ? (
+               <Link href={"/contact"}>
               <Button
-                className="group flex items-center font-bold border-2"
+                className="group font-bold border-2 flex items-center smooth"
                 style={{
                   backgroundColor: hovered.r
                     ? darkTheme.buttonHover
                     : darkTheme.rootBg,
-                    color: hovered.r?darkTheme.rootBgContrastHover:darkTheme.buttonHover,
-                    borderColor:hovered.r?darkTheme.textLight:darkTheme.buttonHover
+                  color: hovered.r
+                    ? darkTheme.rootBgContrastHover
+                    : darkTheme.buttonHover,
+                  borderColor: hovered.r
+                    ? darkTheme.textLight
+                    : darkTheme.buttonHover,
                 }}
                 onMouseOver={() =>
                   setHovered({
@@ -210,11 +221,14 @@ function Profile() {
                   })
                 }
               >
-                Read more
-                <div className="transform transition-transform font-bold group-hover:translate-x-1 ease-in">
-                  <ArrowRight />
-                </div>
+               
+                  Contact
+                  <div className="transform transition-transform font-bold group-hover:translate-x-1 ease-in">
+                    <ArrowRight />
+                  </div>
+                
               </Button>
+              </Link>
             ) : (
               <div
                 className="border outline-none h-9 px-4 py-2 items-center font-bold bg-[#111827] flex gap-2 text-white rounded-md hover:bg-[#282f3c] cursor-pointer"
@@ -239,8 +253,10 @@ function Profile() {
                   backgroundColor: hovered.c
                     ? comonColors.danger
                     : darkTheme.rootBg,
-                    color: hovered.c?darkTheme.buttonHover:comonColors.danger,
-                    borderColor:hovered.c?darkTheme.textLight:comonColors.danger
+                  color: hovered.c ? darkTheme.buttonHover : comonColors.danger,
+                  borderColor: hovered.c
+                    ? darkTheme.textLight
+                    : comonColors.danger,
                 }}
               >
                 Cancel <X size={20} />
