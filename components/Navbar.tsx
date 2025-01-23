@@ -4,35 +4,41 @@ import { Input } from "./ui/input";
 import { NavFeaturesType } from "@/types";
 import Link from "next/link";
 import NavFeature from "./mini-components/NavFeature";
-import { Github, Linkedin } from "lucide-react";
+import { ChevronsRight, Github, Handshake, Headset, Home, Linkedin, MailCheck, Menu, MessageSquareText, Newspaper, X } from "lucide-react";
 import { ProfileData } from "@/constants/data";
 import { darkTheme } from "@/hooks/useTheme";
+import Sidebar from "./mini-components/Sidebar";
 
 export const NavFeatures: NavFeaturesType[] = [
   {
     name: "Home",
     action: () => {},
     navigation: "/",
+    icon:(size)=><Home size={size}/>
   },
   {
     name: "Blogs",
     action: () => {},
     navigation: "/blogs",
+    icon:(size)=><Newspaper size={size}/>
   },
   {
     name: "Conversation",
     action: () => {},
     navigation: "/chat",
+    icon:(size)=><MessageSquareText size={size}/>
   },
   {
     name: "Contact",
     action: () => {},
     navigation: "/contact",
+    icon:(size)=><MailCheck size={size}/>
   },
   {
     name: "Hire",
     action: () => {},
     navigation: "/hire",
+    icon:(size)=><Handshake size={size}/>
   },
 ];
 
@@ -40,27 +46,32 @@ const Navbar: React.FC = (): React.JSX.Element => {
   const [searchText, setSearchText] = useState<string>("");
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [navBehaviourSticky, setNavBehaviourSticky] = useState<boolean>(false);
+  const [menuOpened, setMenuOpened] = useState<boolean>(false);
   const [hovered, setHovered] = useState<{
     l?: boolean;
     linkedIn?: boolean;
     github?: boolean;
+    menu?:boolean;
   }>({
     l: false,
     linkedIn: false,
     github: false,
+    menu:false
   });
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    
-    const handleNavBehaviour = () =>
-      window.scrollY > 400
-        ? setNavBehaviourSticky(true)
-        : setNavBehaviourSticky(false);
 
-    window.addEventListener("scroll", handleNavBehaviour);
-    return () => window.removeEventListener("scroll", handleNavBehaviour);
+    // const handleNavBehaviour = () =>
+    //   window.scrollY > 400
+    //     ? setNavBehaviourSticky(true)
+    //     : setNavBehaviourSticky(false);
+
+    // window.addEventListener("scroll", handleNavBehaviour);
+    // return () => window.removeEventListener("scroll", handleNavBehaviour);
   }, []);
+
+  const handleCloseMenu=()=>setMenuOpened(false)
 
   return (
     <div
@@ -68,31 +79,28 @@ const Navbar: React.FC = (): React.JSX.Element => {
       style={{
         color: darkTheme.text,
         borderBottomColor: darkTheme.border,
-        position: navBehaviourSticky ? "sticky" : "unset",
+        position: "sticky",
         top: 0,
         backgroundColor: darkTheme.rootBg,
       }}
     >
+      {menuOpened&&<Sidebar close={handleCloseMenu}/>}
       <div className="flex cursor-pointer">
         <Link href={"/"} className="flex flex-col">
           <span className="text-xl">{"Portfolio"}</span>
-          <div>
-            <span className="text-xs">{"Portfolio."}</span>
-            <span className="text-lg">{"GomzyDhingra"}</span>
-          </div>
         </Link>
       </div>
       <div className="flex gap-8">
-        <div>
+        <div className="">
           <Input
-            className="w-[400px] hover:ring-1 hover:ring-gray-300 placeholder-gray-500"
-            placeholder="Search blogs"
+            className="w-[400px] hover:ring-1 xl:flex hidden hover:ring-gray-300 placeholder-gray-500"
+            placeholder="Search blogs..."
             onKeyDown={(e) => e.key === "Enter" && console.log(searchText)}
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
           />
         </div>
-        <div className="hidden lg:flex gap-2 lg:visible">
+        <div className="hidden xl:flex gap-2 lg:visible">
           {NavFeatures.map((f, i) => (
             <NavFeature key={i} f={f} click={f.action} />
           ))}
@@ -100,37 +108,78 @@ const Navbar: React.FC = (): React.JSX.Element => {
       </div>
       <div className="flex items-center gap-4 select-none">
         <div className="flex gap-4 items-center justify-center">
-          <Link 
-            href={ProfileData.more.contact.github} 
+          <Link
+            href={ProfileData.more.contact.github}
             target="_blank"
-            onMouseOver={() => setHovered((prev) => ({ ...prev, linkedIn: true }))}
-            onMouseLeave={() => setHovered((prev) => ({ ...prev, linkedIn: false }))}
-            style={{ color: hovered.linkedIn ? darkTheme.textLight : darkTheme.text }}
+            onMouseOver={() =>
+              setHovered(({linkedIn: true }))
+            }
+            onMouseLeave={() =>
+              setHovered(({linkedIn: false }))
+            }
+            style={{
+              color: hovered.linkedIn ? darkTheme.textLight : darkTheme.text,
+            }}
             className="smooth"
           >
             <Github size={26} />
           </Link>
-          <Link 
-            href={ProfileData.more.contact.linkedin} 
+          <Link
+            href={ProfileData.more.contact.linkedin}
             target="_blank"
-            onMouseOver={() => setHovered((prev) => ({ ...prev, github: true }))}
-            onMouseLeave={() => setHovered((prev) => ({ ...prev, github: false }))}
-            style={{ color: hovered.github ? darkTheme.textLight : darkTheme.text }}
+            onMouseOver={() =>
+              setHovered(({ github: true }))
+            }
+            onMouseLeave={() =>
+              setHovered(({ github: false }))
+            }
+            style={{
+              color: hovered.github ? darkTheme.textLight : darkTheme.text,
+            }}
             className="smooth"
           >
             <Linkedin size={26} />
           </Link>
         </div>
-        <div
-          className="px-2 py-1 border rounded-sm hover:bg-gray-200 cursor-pointer smooth"
+        <Link
+         href={"/login"}
+          className="px-2 py-1 border rounded-sm xl:flex hidden hover:bg-gray-200 cursor-pointer smooth"
           style={{
-            backgroundColor: hovered.l ? darkTheme.buttonHover : darkTheme.rootBg,
+            backgroundColor: hovered.l
+              ? darkTheme.buttonHover
+              : darkTheme.rootBg,
             color: hovered.l ? darkTheme.textInContrast : darkTheme.text,
           }}
-          onMouseOver={() => setHovered((prev) => ({ ...prev, l: true }))}
-          onMouseLeave={() => setHovered((prev) => ({ ...prev, l: false }))}
+          onMouseOver={() => setHovered(({l: true }))}
+          onMouseLeave={() => setHovered( ({ l: false }))}
         >
-          <Link href={"/login"}>Login</Link>
+          <div>Login</div>
+        </Link>
+        <div 
+        className="cursor-pointer smooth xl:hidden flex"
+        onMouseOver={() =>
+          setHovered( ({ menu: true }))
+        }
+        onMouseLeave={() =>
+          setHovered(({ menu: false }))
+        }
+        style={{
+          color: hovered.menu ? darkTheme.textLight : darkTheme.text,
+        }}
+        >
+          {menuOpened ? (
+            <ChevronsRight
+              size={30}
+              className="ml-1"
+              onClick={() => setMenuOpened(false)}
+            />
+          ) : (
+            <Menu
+              size={30}
+              className="ml-1"
+              onClick={() => setMenuOpened(true)}
+            />
+          )}
         </div>
       </div>
     </div>

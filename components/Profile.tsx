@@ -4,16 +4,13 @@ import { ProfileData } from "../constants/data";
 import { Button } from "./ui/button";
 import {
   ArrowRight,
-  Cross,
-  CrossIcon,
-  Github,
-  Linkedin,
   X,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { lightTheme, darkTheme, comonColors } from "@/hooks/useTheme";
 import { themeColors } from "@/types";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 function Profile() {
   const router = useRouter();
@@ -54,13 +51,12 @@ function Profile() {
 
   const handleHireAs = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const role = e.target.value;
-    alert(
+    toast.success(
       `You have chosen to hire as ${role.replace(
         "_",
         " "
       )}. Redirecting to Contact page in 5 seconds.`
     );
-
     if (timeOutRef.current) clearTimeout(timeOutRef.current);
     handleTimer();
     setRedirecting(true);
@@ -72,6 +68,7 @@ function Profile() {
 
   const handleCancelRedirecting = () => {
     if (timeOutRef.current) {
+      toast.warn("You have canceled hiring.");
       clearTimeout(timeOutRef.current);
       timerRef.current && clearTimeout(timerRef.current);
       setRedirecting(false);
@@ -190,44 +187,42 @@ function Profile() {
             )}
 
             {!redirecting ? (
-               <Link href={"/contact"}>
-              <Button
-                className="group font-bold border-2 flex items-center smooth"
-                style={{
-                  backgroundColor: hovered.r
-                    ? darkTheme.buttonHover
-                    : darkTheme.rootBg,
-                  color: hovered.r
-                    ? darkTheme.rootBgContrastHover
-                    : darkTheme.buttonHover,
-                  borderColor: hovered.r
-                    ? darkTheme.textLight
-                    : darkTheme.buttonHover,
-                }}
-                onMouseOver={() =>
-                  setHovered({
-                    h: false,
-                    r: true,
-                    re: false,
-                    c: false,
-                  })
-                }
-                onMouseLeave={() =>
-                  setHovered({
-                    h: false,
-                    r: false,
-                    re: false,
-                    c: false,
-                  })
-                }
-              >
-               
+              <Link href={"/contact"}>
+                <Button
+                  className="group font-bold border-2 flex items-center smooth"
+                  style={{
+                    backgroundColor: hovered.r
+                      ? darkTheme.buttonHover
+                      : darkTheme.rootBg,
+                    color: hovered.r
+                      ? darkTheme.rootBgContrastHover
+                      : darkTheme.buttonHover,
+                    borderColor: hovered.r
+                      ? darkTheme.textLight
+                      : darkTheme.buttonHover,
+                  }}
+                  onMouseOver={() =>
+                    setHovered({
+                      h: false,
+                      r: true,
+                      re: false,
+                      c: false,
+                    })
+                  }
+                  onMouseLeave={() =>
+                    setHovered({
+                      h: false,
+                      r: false,
+                      re: false,
+                      c: false,
+                    })
+                  }
+                >
                   Contact
                   <div className="transform transition-transform font-bold group-hover:translate-x-1 ease-in">
                     <ArrowRight />
                   </div>
-                
-              </Button>
+                </Button>
               </Link>
             ) : (
               <div

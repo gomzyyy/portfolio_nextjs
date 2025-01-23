@@ -21,6 +21,7 @@ export interface NavFeaturesType {
   name: string;
   action: () => any;
   navigation: string;
+  icon:(size:number)=>React.JSX.Element
 }
 export interface ImageProps {
   height?: number;

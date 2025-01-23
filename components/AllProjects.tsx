@@ -9,7 +9,7 @@ import Project from "./mini-components/Project";
 function AllProjects() {
   return (
     <div
-      className=" lg:rounded-2xl lg:border-2 lg:w-[100%] w-[90%] p-4 flex-col items-center select-none"
+      className=" lg:rounded-2xl lg:border-2 border-t-2 lg:w-[100%] w-[90%] p-4 flex-col items-center select-none"
       style={{ borderColor: darkTheme.border }}
     >
       <span

@@ -8,34 +8,8 @@ import { Copyright, Github, Linkedin } from "lucide-react";
 import { ProfileData } from "@/constants/data";
 import FooterConnectBy from "./mini-components/FooterConnectBy";
 import FooterNavigation from "./mini-components/FooterNavigation";
+import { NavFeatures } from "./Navbar";
 
-const redirectLinks: NavFeaturesType[] = [
-  {
-    name: "Home",
-    action: () => {},
-    navigation: "/",
-  },
-  {
-    name: "Blogs",
-    action: () => {},
-    navigation: "/blogs",
-  },
-  {
-    name: "Conversation",
-    action: () => {},
-    navigation: "/chat",
-  },
-  {
-    name: "Contact",
-    action: () => {},
-    navigation: "/contact",
-  },
-  {
-    name: "Hire",
-    action: () => {},
-    navigation: "/hire",
-  },
-];
 
 function Footer() {
   const [hover, setHover] = useState<{
@@ -52,10 +26,10 @@ function Footer() {
 
   return (
     <div
-      className="border-t-2 w-[90%] lg:w-[100%] pt-4 pb-2 px-6 select-none h-fit flex flex-col gap-3 items-center"
+      className="border-t-2 pt-4 pb-2 lg:px-6 px-0 select-none h-fit flex flex-col gap-3 items-center"
       style={{ borderColor: darkTheme.border, color: darkTheme.text }}
     >
-      <div className="flex gap-16 flex-col lg:flex-row flex-1 w-[90%]">
+      <div className="flex gap-6 lg:gap-16 flex-col lg:flex-row flex-1 w-[90%]">
         <div
           className="p-2 flex flex-col flex-1 gap-2"
           style={{ borderColor: darkTheme.border }}
@@ -64,12 +38,12 @@ function Footer() {
             Redirecting links
           </div>
           <div className="flex justify-between pr-0 lg:pr-16">
-            <div className="flex flex-col gap-4 lg:gap-1 pl-0 lg:pl-28 justify-center items-center lg:justify-start lg:items-start">
-              {redirectLinks.map((s, i) => (
+            <div className="flex flex-col gap-4 lg:gap-1 pl-0 2lg:pl-28 justify-center items-center lg:justify-start lg:items-start">
+              {NavFeatures.map((s, i) => (
                 <FooterLink s={s} key={i} />
               ))}
             </div>
-            <div className="flex gap-4 items-center flex-col lg:flex-row">
+            <div className="flex gap-4 items-center">
               <Link
                 href={ProfileData.more.contact.linkedin}
                 className="flex flex-col items-center gap-3 smooth"
@@ -106,9 +80,10 @@ function Footer() {
         </div>
       </div>
 
-      <div className="text-center border-t w-[60%] pt-2">
+      <div className="text-center flex flex-col items-center border-t w-[60%] pt-2">
         <div className="flex justify-center"><pre>Portfolio • GomzyDhingra, </pre><div className="flex items-center"><pre>Copyright </pre><Copyright size={16}/><pre> 2025.</pre></div></div>
-        <div>Thanks for visiting</div>
+        <div className="px-12 pb-1 border-b w-fit"
+        >Thanks for visiting</div>
       </div>
     </div>
   );
