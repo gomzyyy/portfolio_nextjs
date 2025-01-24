@@ -2,18 +2,21 @@
 import React, { useEffect, useRef, useState, useContext } from "react";
 import { ProfileData } from "../constants/data";
 import { Button } from "./ui/button";
-import {
-  ArrowRight,
-  X,
-} from "lucide-react";
+import { ArrowRight, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { lightTheme, darkTheme, comonColors } from "@/hooks/useTheme";
 import { themeColors } from "@/types";
 import Link from "next/link";
 import { toast } from "react-toastify";
+import { AppDispatch, RootState } from "@/store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { setCount } from "@/store/slices/admin.slice";
 
 function Profile() {
   const router = useRouter();
+  const dispatch = useDispatch<AppDispatch>();
+  const count = useSelector((s: RootState) => s.admin.count);
+
   const [timer, setTimer] = useState<number>(5);
   const [redirecting, setRedirecting] = useState<boolean>(false);
   const [colors, setColors] = useState<themeColors>(lightTheme);
@@ -88,11 +91,15 @@ function Profile() {
     };
   }, [theme]);
 
+  const handlePlusCount = () => dispatch(setCount());
+
   return (
     <div
       className="border-2 rounded-2xl lg:w-[40%] py-4 px-6 min-w-[385px] w-[80%] select-none h-fit"
       style={{ borderColor: darkTheme.border }}
     >
+      <Button onClick={handlePlusCount}>Count + 1 {count}</Button>
+
       <div className="flex flex-col items-center">
         {/* Profile Container */}
         <div

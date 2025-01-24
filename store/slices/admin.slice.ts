@@ -1,16 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const adminState:{admin:any}={
-    admin:undefined
-}
+const adminState: { admin: any; count: number } = {
+  admin: undefined,
+  count: 0,
+};
 
 const adminSlice = createSlice({
-    name:"admin",
-    initialState:adminState,
-    reducers:{
-        setAdmin:()=>{},
-    }
-})
+  name: "admin",
+  initialState: adminState,
+  reducers: {
+    setAdmin: () => {},
+    setCount: (state) => {
+      state.count += 1;
+    },
+  },
+});
 
 export default adminSlice.reducer;
-export const {setAdmin} = adminSlice.actions;
+export const { setAdmin, setCount } = adminSlice.actions;
