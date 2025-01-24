@@ -6,13 +6,17 @@ import SkillSection from "@/components/SkillSection";
 import { auth } from "@/firebase/firebase";
 import { useEffect } from "react";
 import ReduxProvider from "@/store/provider";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/store/store";
+import { setAdmin } from "@/store/slices/admin.slice";
 
 export default function Home() {
+  const dispatch = useDispatch<AppDispatch>();
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    const user = auth.currentUser;
-  });
-
+    if (auth.currentUser) {
+      dispatch(setAdmin(auth.currentUser));
+    }
+  }, [auth.currentUser]);
   return (
     <ReduxProvider>
       <div className="flex flex-col lg:px-10 px-0 pb-6 pt-10">

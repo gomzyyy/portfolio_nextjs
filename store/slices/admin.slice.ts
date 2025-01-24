@@ -9,7 +9,9 @@ const adminSlice = createSlice({
   name: "admin",
   initialState: adminState,
   reducers: {
-    setAdmin: () => {},
+    setAdmin: (state, action) => {
+      state.admin = action.payload;
+    },
     setCount: (state) => {
       state.count += 1;
     },

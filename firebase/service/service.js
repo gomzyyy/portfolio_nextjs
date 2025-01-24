@@ -1,6 +1,7 @@
 import {
   createUserWithEmailAndPassword,
   signInWithPopup,
+  signInWithRedirect,
   signOut,
 } from "firebase/auth";
 import { googleProvider, githubProvider, auth } from "../firebase.js";
@@ -17,10 +18,11 @@ export const loginWithEmailAndPassword = async ({ email, password }, next) => {
 };
 export const loginWithGoogle = async (next) => {
   try {
-    await signInWithPopup(auth, googleProvider);
+   const res = await signInWithPopup(auth, googleProvider);
     if (typeof next === "function") {
       next();
     }
+    return res;
   } catch (error) {
     return error;
   }

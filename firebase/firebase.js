@@ -8,7 +8,7 @@ import {
   } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: "portfolio-next-gomzy.firebaseapp.com",
   projectId: "portfolio-next-gomzy",
   storageBucket: "portfolio-next-gomzy.firebasestorage.app",

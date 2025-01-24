@@ -10,12 +10,28 @@ import Link from "next/link";
 import { toast } from "react-toastify";
 import { AppDispatch, RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
-import { setCount } from "@/store/slices/admin.slice";
+import { setAdmin, setCount } from "@/store/slices/admin.slice";
+import { auth } from "@/firebase/firebase";
 
 function Profile() {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   const count = useSelector((s: RootState) => s.admin.count);
+  const admin = useSelector((s: RootState) => s.admin.admin);
+
+  useEffect(() => {
+    const getAdminAfterLogin = async () => {
+      try {
+        if (!admin) {
+          const user = auth.currentUser ?? undefined;
+          dispatch(setAdmin(user));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getAdminAfterLogin();
+  }, []);
 
   const [timer, setTimer] = useState<number>(5);
   const [redirecting, setRedirecting] = useState<boolean>(false);
@@ -98,19 +114,14 @@ function Profile() {
       className="border-2 rounded-2xl lg:w-[40%] py-4 px-6 min-w-[385px] w-[80%] select-none h-fit"
       style={{ borderColor: darkTheme.border }}
     >
-      <Button onClick={handlePlusCount}>Count + 1 {count}</Button>
 
       <div className="flex flex-col items-center">
-        {/* Profile Container */}
         <div
           className="overflow-hidden rounded-full bg-black border-[3px]"
           style={{ borderColor: darkTheme.border }}
         >
-          {/* Profile Image */}
           {profileImg({ height: 150, width: 150 })}
         </div>
-
-        {/* Profile Text */}
         <div>
           <div
             className="text-center font-bold text-2xl mb-1"
