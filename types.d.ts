@@ -17,6 +17,16 @@ export interface themeColors {
   commonGreen:string;
 }
 
+export interface blogType{
+  id: string;
+  title: string;
+  content: string;
+  author: string;
+  tags: string[];
+  datePublished: string;
+  thumbnail: string;
+}
+
 export interface NavFeaturesType {
   name: string;
   action: () => any;

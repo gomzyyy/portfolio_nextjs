@@ -39,10 +39,10 @@ const NavFeature: React.FC<NavFeatureProps> = ({
             })
           }
           style={{
-            backgroundColor:hovered.no?darkTheme.buttonHover:darkTheme.rootBg,
-            color:hovered.no?darkTheme.textInContrast:darkTheme.text,
-            borderRadius:hovered.no?4:0,
-            borderBottomWidth:active?1.6:0
+            // backgroundColor:hovered.no?darkTheme.buttonHover:darkTheme.rootBg,
+            color: !active ? hovered.no?darkTheme.textInContrast:darkTheme.text : darkTheme.text,
+            borderBottomWidth:1.6,
+            borderBottomColor: active ? darkTheme.textLight : hovered.no ? darkTheme.border : "transparent"
           }}
         >
           <div>{f.name}</div>

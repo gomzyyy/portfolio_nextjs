@@ -1,11 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Input } from "./ui/input";
-import { NavFeaturesType } from "@/types";
+import { blogType, NavFeaturesType } from "@/types";
 import Link from "next/link";
 import NavFeature from "./mini-components/NavFeature";
 import {
-  ArrowRight,
   ChevronsRight,
   Github,
   Handshake,
@@ -21,13 +20,15 @@ import { ProfileData } from "@/constants/data";
 import { darkTheme } from "@/hooks/useTheme";
 import Sidebar from "./mini-components/Sidebar";
 import { auth } from "@/firebase/firebase";
-import { logoutFromFirebase } from "@/firebase/service/service";
 import { useRouter } from "next/navigation";
-import { setAdmin } from "@/store/slices/admin.slice";
+import { setAdmin, setAllBlogs } from "@/store/slices/admin.slice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import Image from "next/image";
-import { signOut } from "firebase/auth";
+import MiniProfile from "./mini-components/MiniProfile";
+import MiniLogin from "./mini-components/MiniLogin";
+import { useAsyncDebounce } from "@/hooks/useDebounce";
+import { getBlogsByQuery } from "@/service/api";
 
 export const NavFeatures: NavFeaturesType[] = [
   {
@@ -69,8 +70,11 @@ const Navbar: React.FC = (): React.JSX.Element => {
 
   const [searchText, setSearchText] = useState<string>("");
   const [theme, setTheme] = useState<"light" | "dark">("light");
-  const [navBehaviourSticky, setNavBehaviourSticky] = useState<boolean>(false);
+  // const [navBehaviourSticky, setNavBehaviourSticky] = useState<boolean>(false);
   const [menuOpened, setMenuOpened] = useState<boolean>(false);
+  const [profileOpened, setProfileOpened] = useState<boolean>(false);
+  const [miniLoginOpened, setMiniLoginOpened] = useState<boolean>(false);
+
   const [hovered, setHovered] = useState<{
     l?: boolean;
     linkedIn?: boolean;
@@ -84,17 +88,31 @@ const Navbar: React.FC = (): React.JSX.Element => {
   });
 
   useEffect(() => {
+    const setNewBlogResults = async () => {
+      const res:{blogs:blogType[],noOfPages:string} = await getBlogsByQuery(searchText);
+      Array.isArray(res) && dispatch(setAllBlogs(res.blogs));
+    };
+    // useAsyncDebounce(() => setNewBlogResults());
+    setNewBlogResults();
+  }, [searchText]);
+
+  useEffect(() => {
     if (typeof window === "undefined") return;
     if (auth.currentUser) {
       dispatch(setAdmin(auth.currentUser));
     }
   }, []);
 
+  const onKeyDownSearch=()=>{
+    
+  }
   const handleCloseMenu = () => setMenuOpened(false);
+  const handleCloseProfile = () => setProfileOpened(false);
+  const handleCloseMiniLogin = () => setMiniLoginOpened(false);
 
   return (
     <div
-      className="h-16 border-b-2 flex px-6 font-bold items-center justify-between nav-smooth z-50"
+      className="h-16 border-b-2 flex px-6 font-bold items-center justify-between nav-smooth z-50 select-none"
       style={{
         color: darkTheme.text,
         borderBottomColor: darkTheme.border,
@@ -104,6 +122,7 @@ const Navbar: React.FC = (): React.JSX.Element => {
       }}
     >
       {menuOpened && <Sidebar close={handleCloseMenu} />}
+
       <div className="flex cursor-pointer">
         <Link href={"/"} className="flex flex-col">
           <span className="text-xl">{"Portfolio"}</span>
@@ -153,33 +172,37 @@ const Navbar: React.FC = (): React.JSX.Element => {
           </Link>
         </div>
         {!auth?.currentUser ? (
-          <Link
-            href={"/login"}
-            className="px-2 py-1 border rounded-sm ml-1 xl:flex hidden hover:bg-gray-200 cursor-pointer smooth"
-            style={{
-              backgroundColor: hovered.l
-                ? darkTheme.buttonHover
-                : darkTheme.rootBg,
-              color: hovered.l ? darkTheme.textInContrast : darkTheme.text,
-            }}
-            onMouseOver={() => setHovered({ l: true })}
-            onMouseLeave={() => setHovered({ l: false })}
-          >
-            <div>Login</div>
-          </Link>
+          <div className="ml-1">
+            <div
+              className="px-2 py-1 min-h-8 min-w-16 border rounded-sm xl:flex items-center justify-center hidden hover:bg-gray-200 cursor-pointer smooth"
+              style={{
+                backgroundColor: darkTheme.rootBg,
+                color: hovered.l ? darkTheme.textInContrast : darkTheme.text,
+              }}
+              onClick={() => setMiniLoginOpened((p) => !p)}
+              onMouseOver={() => setHovered({ l: true })}
+              onMouseLeave={() => setHovered({ l: false })}
+            >
+              <div>Login</div>
+            </div>
+            {miniLoginOpened && <MiniLogin close={handleCloseMiniLogin} />}
+          </div>
         ) : (
-          <div
-            className="border-1 p-2 rounded-full overflow-hidden cursor-pointer"
-            onClick={() => setMenuOpened(true)}
-            style={{}}
-          >
-            <Image
-              src={auth?.currentUser?.photoURL ?? ""}
-              alt="Profile"
-              width={40}
-              height={40}
-              className="rounded-full"
-            />
+          <div>
+            <div
+              className="border-1 p-2 rounded-full overflow-hidden cursor-pointer"
+              onClick={() => setProfileOpened((p) => !p)}
+              style={{}}
+            >
+              <Image
+                src={auth?.currentUser?.photoURL ?? "/no-profile.jpg"}
+                alt="Profile"
+                width={30}
+                height={30}
+                className="rounded-full"
+              />
+            </div>
+            {profileOpened && <MiniProfile close={handleCloseProfile} />}
           </div>
         )}
         <div
@@ -204,22 +227,6 @@ const Navbar: React.FC = (): React.JSX.Element => {
             />
           )}
         </div>
-        {auth.currentUser && (
-          <div
-            className="cursor-pointer smooth gap-1 xl:flex hidden"
-            onMouseOver={() => setHovered({ menu: true })}
-            onMouseLeave={() => setHovered({ menu: false })}
-            style={{
-              color: hovered.menu ? darkTheme.textLight : darkTheme.text,
-            }}
-            onClick={() => {
-              const res = confirm("Are you sure to Logout?");
-              res && signOut(auth);
-            }}
-          >
-            <ArrowRight />
-          </div>
-        )}
       </div>
     </div>
   );
