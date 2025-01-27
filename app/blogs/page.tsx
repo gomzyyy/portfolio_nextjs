@@ -9,6 +9,7 @@ import SingleBlog from "@/components/mini-components/Blog";
 import { auth } from "@/firebase/firebase";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
+import BlogNav from "./components/BlogNav";
 
 type fetchBlogsRes = {
   blogs: blogType[];
@@ -18,7 +19,7 @@ type fetchBlogsRes = {
 function Blog() {
   const query = useSearchParams();
   const pageNumber = Number(query.get("page"));
-  const allBlogs = useSelector((s:RootState)=>s.admin.allBlogs)
+  const allBlogs = useSelector((s: RootState) => s.admin.allBlogs);
 
   const [result, setResult] = useState<blogType[]>([]);
   const [noOfPages, setNoOfPages] = useState<number[]>([]);
@@ -27,7 +28,7 @@ function Blog() {
   useEffect(() => {
     const fetchBlogs = async () => {
       const res: fetchBlogsRes = await getBlogs(pageNumber);
-      Array.isArray(res.blogs) && setResult(res.blogs);
+      Array.isArray(res.blogs) && setResult(res.blogs ?? []);
       const arr = Array.from({ length: res.noOfPages }, (_, i) => i + 1);
       setNoOfPages(arr);
     };
@@ -36,24 +37,34 @@ function Blog() {
   return (
     <div
       style={{ color: darkTheme.text }}
-      className="flex flex-col lg:px-10 px-8 pb-6 pt-10"
+      className="flex flex-col pb-6"
     >
-      <div className="flex justify-center flex-wrap gap-8 select-none">
-        {result.map((s, i) => (
-          <SingleBlog s={s} key={i} />
-        ))}
-      </div>
-      <div className="mt-4">
-        <div className="flex justify-center gap-2">
-          {noOfPages.map((n, i) => (
-            <Link
-              key={i}
-              href={`/blogs?page=${n}`}
-              className="border rounded-lg px-2 py-1 h-fit w-fit"
-            >
-              <span>{n}</span>
-            </Link>
-          ))}
+      <BlogNav />
+
+      <div className="pt-6 lg:px-10 px-8">
+        {result.length === 0 ? (
+          <div className="text-center font-bold text-xl h-screen">
+            No blog found, start by writing a blog.
+          </div>
+        ) : (
+          <div className="flex justify-center flex-wrap gap-8 select-none">
+            {result.map((s, i) => (
+              <SingleBlog s={s} key={i} />
+            ))}
+          </div>
+        )}
+        <div className="mt-4">
+          <div className="flex justify-center gap-2">
+            {noOfPages.map((n, i) => (
+              <Link
+                key={i}
+                href={`/blogs?page=${n}`}
+                className="border rounded-lg px-2 py-1 h-fit w-fit"
+              >
+                <span>{n}</span>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </div>

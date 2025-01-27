@@ -8,7 +8,11 @@ export const getBlogs = async (page = 1, limit = 10) => {
     );
 
     if (!response.ok) {
-      throw new Error(`Error: ${response.status} - ${response.statusText}`);
+      return res={
+        message:"Internal server error.",
+        blogs:[],
+        noOfPages:0
+      }
     }
     const data = await response.json();
     return data;

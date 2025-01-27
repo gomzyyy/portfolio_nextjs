@@ -100,3 +100,7 @@ html::-webkit-scrollbar-thumb:hover {
 .minibar-shadow {
   box-shadow: 2px 2px 2px rgb(0, 0, 0), -2px, -2px 2px rgb(0, 0, 0);
 }
+.scrollbar-hidden::-webkit-scrollbar{
+  display: none;
+  overflow: scroll;
+}

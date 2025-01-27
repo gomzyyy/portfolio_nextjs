@@ -111,7 +111,7 @@ function Profile() {
 
   return (
     <div
-      className="border-2 rounded-2xl lg:w-[40%] py-4 px-6 min-w-[385px] w-[80%] select-none h-fit"
+      className="sm:border-2 rounded-2xl lg:w-[40%] py-4 px-6 min-w-[385px] w-[80%] select-none h-fit"
       style={{ borderColor: darkTheme.border }}
     >
 

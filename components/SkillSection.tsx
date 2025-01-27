@@ -13,7 +13,7 @@ function SkillSection() {
   const st=[...s.stateManagement]
   const v=[...s.versionControl]
   return (
-    <div className="border-2 rounded-2xl p-8 w-[80%]  lg:w-[60%] min-w-[385px] select-none"
+    <div className="sm:border-2 border-t-2 sm:rounded-2xl p-8 w-[80%]  lg:w-[60%] min-w-[385px] select-none"
     style={{borderColor:darkTheme.border}}
     >
       {/* <div className="border-2 rounded-2xl p-4 flex flex-col gap-2"

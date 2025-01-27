@@ -18,13 +18,14 @@ export interface themeColors {
 }
 
 export interface blogType{
-  id: string;
+  id?: string;
   title: string;
   content: string;
   author: string;
-  tags: string[];
-  datePublished: string;
+  tags: string[] | [];
+  datePublished?: string;
   thumbnail: string;
+  category:string
 }
 
 export interface NavFeaturesType {

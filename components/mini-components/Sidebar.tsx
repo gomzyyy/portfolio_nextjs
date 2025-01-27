@@ -44,7 +44,7 @@ function Sidebar({ close }: { close: () => void }) {
   };
 
   return (
-    <div className="flex h-screen w-[100%] xl:hidden absolute z-50 bg-[rgba(0,0,0,0.4)] top-16 right-0 justify-end select-none">
+    <div className="flex h-screen w-[100%] xl:hidden absolute z-50 bg-[rgba(0,0,0,0.6)] top-16 right-0 justify-end select-none">
       <div
         className="flex-1 flex justify-center"
         onClick={() => close()}

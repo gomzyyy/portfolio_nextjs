@@ -1,6 +1,9 @@
 import AdminProfileImage from "@/components/shared/AdminProfileImage";
 import { ImageProps, ProfileType, ProjectDetailsType } from "@/types";
 
+export const BrokenImage =
+  "https://ehelperteam.com/wp-content/uploads/2019/09/Broken-images.png";
+
 export const ProfileData: ProfileType = {
   name: "GomzyDhingra",
   action: (callback) => callback(),
@@ -189,13 +192,14 @@ export const ProfileData: ProfileType = {
       email: "gomzydhingra69@gmail.com",
       linkedin: "https://www.linkedin.com/in/gomzy-dhingra-4140202b5",
       github: "https://github.com/gomzyyy",
-      contactNumber:"+91 9781295937",
-      disclamer:"While I am always eager to connect and collaborate, I kindly request that all communications remain respectful and considerate. Thank you!"
+      contactNumber: "+91 9781295937",
+      disclamer:
+        "While I am always eager to connect and collaborate, I kindly request that all communications remain respectful and considerate. Thank you!",
     },
   },
 };
 
-export const myProjects:ProjectDetailsType[] = [
+export const myProjects: ProjectDetailsType[] = [
   {
     label: "ChatApp in ReactJs",
     comments: "",
@@ -346,11 +350,7 @@ export const myProjects:ProjectDetailsType[] = [
     description:
       "Built multiple webpages using my fundamentals of web development, compatible for all the devices; PC,Tab,mobile etc, during my Internship.",
     completed: true,
-    technologiesUsed: [
-     "HTML",
-     "CSS",
-     "JavaScript"
-    ],
+    technologiesUsed: ["HTML", "CSS", "JavaScript"],
     credits: [
       {
         label: "Certificate",
@@ -358,4 +358,17 @@ export const myProjects:ProjectDetailsType[] = [
       },
     ],
   },
+];
+
+export const blogRules = [
+  { id: 1, rule: "Use a clear, engaging and relevant title." },
+  { id: 2, rule: "Write original and high-quality content." },
+  { id: 3, rule: "Keep paragraphs short and readable." },
+  { id: 4, rule: "Use proper grammar and punctuation." },
+  { id: 5, rule: "Use of a relevant thumbnail is recommended." },
+  {
+    id: 6,
+    rule: "Try using 16:9 or 1:1 Thumbnail for better compatibility with layout.",
+  },
+  { id: 7, rule: "Click on preview button to see the preview of your blog." },
 ];
