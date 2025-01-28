@@ -20,7 +20,6 @@ function Blog() {
   const query = useSearchParams();
   const pageNumber = Number(query.get("page"));
   const allBlogs = useSelector((s: RootState) => s.admin.allBlogs);
-
   const [result, setResult] = useState<blogType[]>([]);
   const [noOfPages, setNoOfPages] = useState<number[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(pageNumber ?? 1);
@@ -35,10 +34,7 @@ function Blog() {
     fetchBlogs();
   }, [pageNumber]);
   return (
-    <div
-      style={{ color: darkTheme.text }}
-      className="flex flex-col pb-6"
-    >
+    <div style={{ color: darkTheme.text }} className="flex flex-col pb-6">
       <BlogNav />
 
       <div className="pt-6 lg:px-10 px-8">

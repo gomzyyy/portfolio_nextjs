@@ -1,4 +1,5 @@
 import { blogs } from "../../constants/serverData.js";
+import { Blog } from "../../models/blog.js";
 export const getAllBlogs = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
@@ -6,13 +7,13 @@ export const getAllBlogs = async (req, res) => {
     const startIndex = (page - 1) * limit;
     const endIndex = startIndex + limit;
 
-    const paginatedBlogs = blogs.slice(startIndex, endIndex);
-    return res
-      .status(200)
-      .json({
-        blogs: paginatedBlogs,
-        noOfPages: Math.floor(blogs.length / 10),
-      });
+    const allBlogs = await Blog.find().populate("author");
+
+    const paginatedBlogs = allBlogs.slice(startIndex, endIndex);
+    return res.status(200).json({
+      blogs: paginatedBlogs,
+      noOfPages: Math.floor(blogs.length / 10),
+    });
   } catch (error) {
     console.log(error);
   }

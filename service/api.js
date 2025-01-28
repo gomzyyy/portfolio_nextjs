@@ -8,11 +8,11 @@ export const getBlogs = async (page = 1, limit = 10) => {
     );
 
     if (!response.ok) {
-      return res={
-        message:"Internal server error.",
-        blogs:[],
-        noOfPages:0
-      }
+      return (res = {
+        message: "Internal server error.",
+        blogs: [],
+        noOfPages: 0,
+      });
     }
     const data = await response.json();
     return data;
@@ -47,7 +47,7 @@ export const getBlogsByQuery = async (query) => {
 export const getBlogsById = async (query) => {
   try {
     const response = await fetch(
-      `http://localhost:8000//get/blogs/by-id?id=${query}`,
+      `http://localhost:8000/get/blogs/by-id?id=${query}`,
       { method: "GET" }
     );
 
@@ -64,3 +64,25 @@ export const getBlogsById = async (query) => {
     );
   }
 };
+export const createBlog = async (data) => {
+  try {
+    console.log(data)
+    const response = await fetch(`http://localhost:8000/post/blog/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (!response.ok) {
+      return await response.json();
+    }
+    const res = await response.json();
+    return res;
+  } catch (error) {
+    console.log(error)
+  }
+};
+// alert(
+//   error instanceof Error
+//     ? error.message
+//     : "Unable to process request at the moment."
+// );

@@ -40,7 +40,7 @@ function Login(): React.JSX.Element {
     return true;
   };
 
-  const navigateAfterLogin = () => router.replace("/");
+  const navigateAfterLogin = () => router.back();
 
   const handleLoginThroughGoogle = async () => {
     await signInWithPopup(auth, googleProvider);

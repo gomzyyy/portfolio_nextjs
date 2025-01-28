@@ -368,7 +368,7 @@ export const blogRules = [
   { id: 5, rule: "Use of a relevant thumbnail is recommended." },
   {
     id: 6,
-    rule: "Try using 16:9 or 1:1 Thumbnail for better compatibility with layout.",
+    rule: "Try using 16:9 Thumbnail for better compatilility with layout.(Only for preview.)",
   },
   { id: 7, rule: "Click on preview button to see the preview of your blog." },
 ];

@@ -2,12 +2,9 @@ import mongoose, { Schema } from "mongoose";
 
 const blogModel = new Schema(
   {
-    title: {
-      type: string,
-      required: true,
-    },
+    title: { type: String, required: true },
     content: {
-      type: string,
+      type: String,
       required: true,
     },
     author: {
@@ -16,15 +13,19 @@ const blogModel = new Schema(
     },
     tags: [
       {
-        type: string,
+        type: String,
       },
     ],
     thumbnail: {
-      type: string,
+      type: String,
       default: "",
+    },
+    category: {
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }
 );
 
-export const Blog = mongoose.model("Blog",blogModel)
+export const Blog = mongoose.model("Blog", blogModel);

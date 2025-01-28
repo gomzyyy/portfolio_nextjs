@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { BrokenImage } from "@/constants/data";
 import { X } from "lucide-react";
+import { createBlog } from "@/service/api";
 
 function CreateBlog({ close }: { close: () => void }) {
   const b = blogs[0];
@@ -31,7 +32,10 @@ function CreateBlog({ close }: { close: () => void }) {
   const [pd, setPd] = useState<blogType>({
     title: "[title will appear here.]",
     content: "[content will appear here.]",
-    author: auth?.currentUser?.displayName ?? "Anonymous",
+    author:{
+      authorId: auth?.currentUser?.uid ?? "Anonymous",
+      displayName: auth?.currentUser?.displayName ?? "Anonymous",
+    },
     tags: ["tag1", "tag2", "tag3"],
     thumbnail: BrokenImage,
     datePublished: new Date().toDateString(),
@@ -63,7 +67,10 @@ function CreateBlog({ close }: { close: () => void }) {
         thumbnail,
         content,
         category,
-        author: auth?.currentUser?.displayName ?? "Anonymous",
+        author:{
+          authorId: auth?.currentUser?.uid ?? "Anonymous",
+          displayName: auth?.currentUser?.displayName ?? "Anonymous",
+        },
         tags: tags.split(",").map((s) => s.trim()),
       };
       setPd(blogTypeData);
@@ -75,9 +82,28 @@ function CreateBlog({ close }: { close: () => void }) {
     }
   };
 
+  const handleBlogCreate = async () => {
+    try {
+      const blogTypeData: blogType = {
+        title,
+        thumbnail,
+        content,
+        category,
+        author:{
+          authorId: auth?.currentUser?.uid ?? "Anonymous",
+          displayName: auth?.currentUser?.displayName ?? "Anonymous",
+        },
+        tags: tags.split(",").map((s) => s.trim()),
+      };
+      const res = await createBlog(blogTypeData);
+    } catch (error) {
+      throw new Error("Error occured while creating blog.");
+    }
+  };
+
   return (
     <div
-      className="absolute w-full h-screen top-0 pb-20 px-6 flex justify-center z-50 scrollbar-hidden overflow-auto"
+      className="fixed w-full h-screen top-[64px] pb-20 flex justify-center z-50 scrollbar-hidden overflow-auto"
       style={{
         backgroundColor: "rgba(0,0,0,0.6)",
       }}
@@ -96,11 +122,10 @@ function CreateBlog({ close }: { close: () => void }) {
         className="flex justify-evenly gap-6 xl:gap-12 flex-col xl:flex-row"
         style={{
           alignItems: openPreview ? "center" : "unset",
-          paddingTop: openPreview ? 0 : 40,
         }}
       >
         {/* Creation form */}
-        <div className="">
+      {!openPreview &&  <div className="">
           <form
             className="px-10 pt-2 pb-6 h-fit w-fit border rounded-xl flex flex-col lg:flex-row gap-8 mb-6 relative"
             style={{
@@ -111,7 +136,10 @@ function CreateBlog({ close }: { close: () => void }) {
               e.preventDefault();
             }}
           >
-            <span className="absolute top-2 right-2" onClick={close}>
+            <span
+              className="absolute top-2 right-2 cursor-pointer"
+              onClick={close}
+            >
               <X size={16} />
             </span>
             <div>
@@ -120,7 +148,7 @@ function CreateBlog({ close }: { close: () => void }) {
                 <div>
                   <span>Title*</span>
                   <Input
-                    className="w-[280px]"
+                    className="w-[100%]"
                     placeholder="title"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
@@ -129,7 +157,7 @@ function CreateBlog({ close }: { close: () => void }) {
                 <div>
                   <span>Content*</span>
                   <Input
-                    className="w-[280px]"
+                    className="w-[100%]"
                     placeholder="content"
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
@@ -138,7 +166,7 @@ function CreateBlog({ close }: { close: () => void }) {
                 <div>
                   <span>Thumbnail*</span>
                   <Input
-                    className="w-[280px]"
+                    className="w-[100%]"
                     placeholder="add a thumbnail"
                     value={thumbnail}
                     onChange={(e) => setThumbnail(e.target.value)}
@@ -147,7 +175,7 @@ function CreateBlog({ close }: { close: () => void }) {
                 <div>
                   <span>Tags*</span>
                   <Input
-                    className="w-[280px]"
+                    className="w-[100%]"
                     placeholder="add relevant 
                     tags with commas; react,next"
                     value={tags}
@@ -157,7 +185,7 @@ function CreateBlog({ close }: { close: () => void }) {
                 <div>
                   <span>Category*</span>
                   <Input
-                    className="w-[280px]"
+                    className="w-[100%]"
                     placeholder="add relevant tags with commas; react,next"
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
@@ -165,7 +193,7 @@ function CreateBlog({ close }: { close: () => void }) {
                 </div>
               </div>
               <div className="flex justify-between mt-4">
-                <Button>Create</Button>
+                <Button onClick={handleBlogCreate}>Create</Button>
                 <Button onClick={handleTooglePreview}>Preview</Button>
               </div>
             </div>
@@ -182,7 +210,7 @@ function CreateBlog({ close }: { close: () => void }) {
               </div>
             </div>
           </form>
-        </div>
+        </div>}
         {/* Preview */}
         {previewViewable && openPreview && (
           <div

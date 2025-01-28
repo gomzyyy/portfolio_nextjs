@@ -21,7 +21,10 @@ export interface blogType{
   id?: string;
   title: string;
   content: string;
-  author: string;
+  author: {
+    authorId:string;
+    displayName:string;
+  };
   tags: string[] | [];
   datePublished?: string;
   thumbnail: string;

@@ -66,8 +66,9 @@ export const NavFeatures: NavFeaturesType[] = [
 const Navbar: React.FC = (): React.JSX.Element => {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
-  const admin = useSelector((s: RootState) => s.admin.admin);
-
+  const author = useSelector((s: RootState) => s.admin.admin?.uid);
+  const photo = useSelector((s: RootState) => s.admin.admin?.photoURL);
+  const authOk: boolean = author && author.length !== 0 ? true : false;
   const [searchText, setSearchText] = useState<string>("");
   const [theme, setTheme] = useState<"light" | "dark">("light");
   // const [navBehaviourSticky, setNavBehaviourSticky] = useState<boolean>(false);
@@ -171,7 +172,7 @@ const Navbar: React.FC = (): React.JSX.Element => {
             <Linkedin size={26} />
           </Link>
         </div>
-        {!auth?.currentUser ? (
+        {!authOk ? (
           <div className="ml-1">
             <div
               className="px-2 py-1 min-h-8 min-w-16 border rounded-sm xl:flex items-center justify-center hidden hover:bg-gray-200 cursor-pointer smooth"
@@ -195,7 +196,7 @@ const Navbar: React.FC = (): React.JSX.Element => {
               style={{}}
             >
               <Image
-                src={auth?.currentUser?.photoURL ?? "/no-profile.jpg"}
+                src={photo ?? "/no-profile.jpg"}
                 alt="Profile"
                 width={30}
                 height={30}

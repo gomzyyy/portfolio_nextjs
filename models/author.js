@@ -2,11 +2,11 @@ import mongoose, { Schema } from "mongoose";
 
 const authorModel = new Schema({
   authorId: {
-    type: string,
+    type: String,
     required: true,
   },
   displayName: {
-    type: string,
+    type: String,
     required: true,
   },
 });
