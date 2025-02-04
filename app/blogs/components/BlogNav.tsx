@@ -30,7 +30,7 @@ function BlogNav() {
 
   return (
     <nav
-      className="h-16 flex flex-col px-10 font-bold items-center justify-between nav-smooth w-full select-none"
+      className="h-16 flex flex-col px-10 font-bold items-center justify-between nav-smooth w-full select-none smooth-render-fast"
       style={{
         color: darkTheme.text,
         backgroundColor: darkTheme.rootBg,

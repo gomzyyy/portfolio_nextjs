@@ -11,7 +11,7 @@ export const getAllBlogs = async (req, res) => {
 
     const paginatedBlogs = allBlogs.slice(startIndex, endIndex);
     return res.status(200).json({
-      blogs: paginatedBlogs,
+      blogs: Array.isArray(paginatedBlogs) ? paginatedBlogs.reverse() : [],
       noOfPages: Math.floor(blogs.length / 10),
     });
   } catch (error) {

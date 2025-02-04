@@ -26,7 +26,7 @@ function MiniLogin({ close }: { close: () => void }) {
   return (
     <div>
       <div
-        className="p-4 absolute right-3 top-20 h-fit select-none  border rounded-xl shadow-2xl"
+        className="p-4 absolute right-3 top-20 h-fit select-none  border rounded-xl shadow-2xl smooth-render-fast"
         style={{ backgroundColor: darkTheme.rootBg }}
       >
         <span className="absolute right-2 top-2 cursor-pointer" onClick={close}><X size={14} /></span>

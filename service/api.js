@@ -16,10 +16,10 @@ export const getBlogs = async (page = 1, limit = 10) => {
     }
     const data = await response.json();
     return data;
-  } catch (err) {
-    alert(
-      err instanceof Error
-        ? err.message
+  } catch (error) {
+    throw new Error(
+      error instanceof Error
+        ? error.message
         : "Unable to process request at the moment."
     );
   }
@@ -37,7 +37,7 @@ export const getBlogsByQuery = async (query) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.log(
+    throw new Error(
       error instanceof Error
         ? error.message
         : "Unable to process request at the moment."
@@ -57,16 +57,15 @@ export const getBlogsById = async (query) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    alert(
-      err instanceof Error
-        ? err.message
+    throw new Error(
+      error instanceof Error
+        ? error.message
         : "Unable to process request at the moment."
     );
   }
 };
 export const createBlog = async (data) => {
   try {
-    console.log(data)
     const response = await fetch(`http://localhost:8000/post/blog/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -78,11 +77,58 @@ export const createBlog = async (data) => {
     const res = await response.json();
     return res;
   } catch (error) {
-    console.log(error)
+    throw new Error(
+      error instanceof Error ? error.message : "Unable to create blog."
+    );
   }
 };
-// alert(
-//   error instanceof Error
-//     ? error.message
-//     : "Unable to process request at the moment."
-// );
+export const createRequest = async (data) => {
+  try {
+    if (!data.name || !data.email) {
+      alert("some required fields are missing.");
+      return;
+    }
+    const response = await fetch(
+      `http://localhost:8000/post/connection-request/`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    if (!response.ok) {
+      return await response.json();
+    }
+    const res = await response.json();
+    return res;
+  } catch (error) {
+    throw new Error(
+      error instanceof Error ? error.message : "Unable to send request."
+    );
+  }
+};
+export const getAllRequests = async (data) => {
+  try {
+    if (!data.name || !data.email) {
+      alert("some required fields are missing.");
+      return;
+    }
+    const response = await fetch(
+      `http://localhost:8000/get/connection-requests/`,
+      {
+        method: "GET",
+      }
+    );
+    if (!response.ok) {
+      return await response.json();
+    }
+    const res = await response.json();
+    return res;
+  } catch (error) {
+    throw new Error(
+      error instanceof Error ? error.message : "Unable to send request."
+    );
+  }
+};

@@ -4,7 +4,6 @@ import { Blog } from "../../models/blog.js";
 
 export const createBlogController = async (req, res) => {
   try {
-    console.log("dbu")
     const { title, author, content, tags, category, thumbnail } =
       req.body;
     if (

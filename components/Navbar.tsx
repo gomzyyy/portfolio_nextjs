@@ -43,12 +43,12 @@ export const NavFeatures: NavFeaturesType[] = [
     navigation: "/blogs",
     icon: (size) => <Newspaper size={size} />,
   },
-  {
-    name: "Conversation",
-    action: () => {},
-    navigation: "/chat",
-    icon: (size) => <MessageSquareText size={size} />,
-  },
+  // {
+  //   name: "Conversation",
+  //   action: () => {},
+  //   navigation: "/chat",
+  //   icon: (size) => <MessageSquareText size={size} />,
+  // },
   {
     name: "Contact",
     action: () => {},

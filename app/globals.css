@@ -90,6 +90,11 @@ html::-webkit-scrollbar-thumb {
 html::-webkit-scrollbar-thumb:hover {
   background-color: #555;
 }
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 .smooth {
   transition: all 0.1s ease-in-out;
 }
@@ -100,7 +105,39 @@ html::-webkit-scrollbar-thumb:hover {
 .minibar-shadow {
   box-shadow: 2px 2px 2px rgb(0, 0, 0), -2px, -2px 2px rgb(0, 0, 0);
 }
-.scrollbar-hidden::-webkit-scrollbar{
+.scrollbar-hidden::-webkit-scrollbar {
   display: none;
   overflow: scroll;
+}
+.smooth-render-fast {
+  animation: smooth-render 0.1s ease-in;
+}
+.smooth-render-md {
+  animation: smooth-render 0.2s ease-in;
+}
+.smooth-render-slow1 {
+  animation: smooth-render 0.3s ease-in;
+}
+.smooth-render-slow2 {
+  animation: smooth-render 0.4s ease-in;
+}
+.smooth-render-slow2 {
+  animation: smooth-render 0.4s ease-in;
+}
+.smooth-render-slow3 {
+  animation: smooth-render 0.4s ease-in;
+}
+.smooth-render-slow4 {
+  animation: smooth-render 0.4s ease-in;
+}
+.smooth-render-slow5 {
+  animation: smooth-render 0.4s ease-in;
+}
+@keyframes smooth-render {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

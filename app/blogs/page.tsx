@@ -36,14 +36,13 @@ function Blog() {
   return (
     <div style={{ color: darkTheme.text }} className="flex flex-col pb-6">
       <BlogNav />
-
-      <div className="pt-6 lg:px-10 px-8">
+      <div className="pt-6 lg:px-56 px-8">
         {result.length === 0 ? (
           <div className="text-center font-bold text-xl h-screen">
             No blog found, start by writing a blog.
           </div>
         ) : (
-          <div className="flex justify-center flex-wrap gap-8 select-none">
+          <div className="flex justify-center flex-wrap gap-8 select-none smooth-render-slow1">
             {result.map((s, i) => (
               <SingleBlog s={s} key={i} />
             ))}
