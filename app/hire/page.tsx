@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import WhyHireMe from "./components/WhyHireMe";
 
 function Hire() {
   const query = useSearchParams();
@@ -17,7 +18,11 @@ function Hire() {
   useEffect(() => {
     hireAs && hireAs?.trim().length !== 0 && setRole(handleHireAs());
   }, []);
-  return <div>Hire as {role}</div>;
+  return (
+    <div className="px-8 py-6">
+      <WhyHireMe />
+    </div>
+  );
 }
 
 export default Hire;

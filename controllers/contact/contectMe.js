@@ -8,14 +8,13 @@ export const contactMeController = async (req, res) => {
       name,
       email,
       author,
-      phone,
+      number,
       countryCode,
       socialHandleUrl,
       socialHandleUrlType,
       message,
     } = req.body;
 
-    // ✅ 1. Validate required fields
     if (!name || !email) {
       return res.status(r.BAD_REQUEST.code).json({
         message: "Required entries are missing. (Name and Email)",
@@ -33,16 +32,31 @@ export const contactMeController = async (req, res) => {
       );
     }
 
+    const existingContact = await Contact.findOne({ email });
+    if (existingContact) {
+      existingContact.message = message?.trim() || null;
+      existingContact.number = number?.trim() || null;
+      existingContact.countryCode = countryCode?.trim() || null;
+      existingContact.socialHandleUrl = socialHandleUrl?.trim() || null;
+      existingContact.socialHandleUrlType = socialHandleUrlType?.trim() || null;
+      await existingContact.save();
+      return res.status(r.OK.code).json({
+        message: "Request sent successfully ✅",
+        success: true,
+      });
+    }
+
     const contactDetails = {
       name: name.trim(),
       email: email.trim(),
       author: existingAuthor,
-      phone: phone?.trim() || null,
+      number: number?.trim() || null,
       countryCode: countryCode?.trim() || null,
       socialHandleUrl: socialHandleUrl?.trim() || null,
       socialHandleUrlType: socialHandleUrlType?.trim() || null,
       message: message?.trim() || null,
     };
+    console.log(contactDetails);
 
     await Contact.create(contactDetails);
 
@@ -52,7 +66,10 @@ export const contactMeController = async (req, res) => {
     });
   } catch (error) {
     return res.status(r.INTERNAL_SERVER_ERROR.code).json({
-      message: error instanceof Error ? error.message : "Internal server error occurred.",
+      message:
+        error instanceof Error
+          ? error.message
+          : "Internal server error occurred.",
       success: false,
     });
   }

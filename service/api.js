@@ -82,8 +82,10 @@ export const createBlog = async (data) => {
     );
   }
 };
-export const createRequest = async (data) => {
+export const createRequest = async (data,setLoading) => {
   try {
+    setLoading(true)
+    console.log("Requ")
     if (!data.name || !data.email) {
       alert("some required fields are missing.");
       return;
@@ -104,31 +106,26 @@ export const createRequest = async (data) => {
     const res = await response.json();
     return res;
   } catch (error) {
-    throw new Error(
-      error instanceof Error ? error.message : "Unable to send request."
-    );
+    return error instanceof Error ? error.message : "Unable to send request."
+  }finally{
+    setLoading(false)
   }
 };
-export const getAllRequests = async (data) => {
+export const getAllRequests = async (id,pageNumber,limit=20) => {
   try {
-    if (!data.name || !data.email) {
-      alert("some required fields are missing.");
-      return;
-    }
     const response = await fetch(
-      `http://localhost:8000/get/connection-requests/`,
-      {
-        method: "GET",
-      }
+      `http://localhost:8000/get/connection-requests?id=${id}&page=${pageNumber}&limit=${limit}`
     );
-    if (!response.ok) {
-      return await response.json();
-    }
+
     const res = await response.json();
+
+    if (!response.ok) {
+      throw new Error(res.message || "Failed to fetch requests");
+    }
+
     return res;
   } catch (error) {
-    throw new Error(
-      error instanceof Error ? error.message : "Unable to send request."
-    );
+    throw new Error(error.message || "Unable to send request.");
   }
 };
+

@@ -13,10 +13,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAdmin, setCount } from "@/store/slices/admin.slice";
 import { auth } from "@/firebase/firebase";
 
-function Profile() {
+type profilePropType = {
+  showBtnHire?:boolean;
+  showBtnContact?:boolean;
+}
+
+const Profile:React.FC<profilePropType>=({showBtnHire=true,showBtnContact=true}):React.JSX.Element=> {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
-  const count = useSelector((s: RootState) => s.admin.count);
   const admin = useSelector((s: RootState) => s.admin.admin);
 
   useEffect(() => {
@@ -134,7 +138,7 @@ function Profile() {
             {ProfileData.bio}
           </p>
           <div className="flex justify-between px-6">
-            {!redirecting ? (
+            {showBtnHire && (!redirecting ? (
               <select
                 className={`outline-none h-9 px-4 py-2 rounded-md font-bold hover:bg-[#282f3c] cursor-pointer border-2 smooth`}
                 style={{
@@ -201,10 +205,10 @@ function Profile() {
                 }
               >
                 Redirecting in {timer}s
-              </div>
+              </div>)
             )}
 
-            {!redirecting ? (
+            { showBtnContact && (!redirecting ? (
               <Link href={"/contact"}>
                 <Button
                   className="group font-bold border-2 flex items-center smooth"
@@ -273,7 +277,7 @@ function Profile() {
                 }}
               >
                 Cancel <X size={20} />
-              </div>
+              </div>)
             )}
           </div>
         </div>

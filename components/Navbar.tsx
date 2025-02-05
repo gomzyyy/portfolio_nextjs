@@ -55,12 +55,12 @@ export const NavFeatures: NavFeaturesType[] = [
     navigation: "/contact",
     icon: (size) => <MailCheck size={size} />,
   },
-  {
-    name: "Hire",
-    action: () => {},
-    navigation: "/hire",
-    icon: (size) => <Handshake size={size} />,
-  },
+  // {
+  //   name: "Hire",
+  //   action: () => {},
+  //   navigation: "/hire",
+  //   icon: (size) => <Handshake size={size} />,
+  // },
 ];
 
 const Navbar: React.FC = (): React.JSX.Element => {

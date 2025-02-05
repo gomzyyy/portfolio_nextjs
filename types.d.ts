@@ -16,6 +16,20 @@ export interface themeColors {
   buttonHover1: string;
   commonGreen:string;
 }
+export interface requestType{
+  _id:string | undefined;
+  name:string;
+  author?:{
+    authorId:string;
+    displayName:string;
+  } | string;
+  email:string;
+  countryCode?:string;
+  number?:string;
+  socialHandleUrl:string;
+  socialHandleUrlType:string;
+  message:string;
+}
 
 export interface blogType{
   id?: string;

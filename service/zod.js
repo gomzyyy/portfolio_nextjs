@@ -8,7 +8,7 @@ export const contactSchema = z.object({
   email: z.string().email("Invalid Email"),
   countryCode:z.string().optional(),
   number:z.string().length(10,"Invalid phone number").optional(),
-  socialHandleUrlType:z.enum(["linkdid","instagram","facebook","twitter"]).optional(),
+  socialHandleUrlType:z.enum(["linkedin","instagram","facebook","twitter"]).optional(),
   socialHandleUrl:z.string().optional(),
   message:z.string().max(300,"Message cannot exceed 300 characters.").optional()
 });
