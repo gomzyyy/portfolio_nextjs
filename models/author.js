@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, models } from "mongoose";
 
 const authorModel = new Schema({
   authorId: {
@@ -11,4 +11,5 @@ const authorModel = new Schema({
   },
 });
 
-export const Author = mongoose.model("Author",authorModel)
+export const Author = models.Author || mongoose.model("Author", authorModel);
+

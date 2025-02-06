@@ -1,9 +1,11 @@
 import { baseUrl_get } from "../constants/serverData";
 
+const url = "https://portfolio-nextjs-9jaj0k19c-gomzy-dhingras-projects.vercel.app/"
+
 export const getBlogs = async (page = 1, limit = 10) => {
   try {
     const response = await fetch(
-      `http://localhost:8000/get/blogs?page=${page}&limit=${limit}`,
+      `${url}api/blogs?page=${page}&limit=${limit}`,
       { method: "GET" }
     );
 
