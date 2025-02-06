@@ -1,5 +1,4 @@
 "use client";
-import { auth } from "@/firebase/firebase";
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSelector } from "react-redux";
@@ -35,10 +34,10 @@ function AllRequests() {
     const timerId = setTimeout(() => {
       fetchRequests();
       setFetchingReq(true);
-    }, 2000);
+    }, 5000);
     return () => {
       clearTimeout(timerId);
-      fetchingReq && setFetchingReq(false);
+      setFetchingReq(false);
     };
   }, [pageNumber]);
 
@@ -47,26 +46,24 @@ function AllRequests() {
       className="py-8 px-8"
       style={{ height: requests.length < 8 ? "100vh" : "fit" }}
     >
-      {requests.length !== 0 ? (
-        fetchingReq ? (
-          <div
-            className="flex flex-wrap gap-2"
-            style={{ justifyContent: requests.length < 4 ? "start" : "center" }}
-          >
-            {requests.map((s, i) => (
-              <RequestCard key={i} request={s} />
-            ))}
-          </div>
-        ) : (
-          <div
-            className="flex justify-center pt-3 text-xl font-bold"
-            style={{ color: darkTheme.text }}
-          >
-            Intentional latency is added due to security reasons, please be
-            paitent.
-          </div>
-        )
+      {fetchingReq ? (
+      <div
+        className="flex flex-wrap gap-2"
+        style={{ justifyContent: requests.length < 4 ? "start" : "center" }}
+      >
+        {requests.map((s, i) => (
+          <RequestCard key={i} request={s} />
+        ))}
+      </div>
       ) : (
+      <div
+        className="flex justify-center pt-3 text-xl font-bold"
+        style={{ color: darkTheme.text }}
+      >
+        Intentional latency is added due to security reasons, please be paitent.
+      </div>
+      )}
+      {requests.length === 0 && fetchingReq && (
         <div
           className="flex justify-center pt-3 text-xl font-bold"
           style={{ color: darkTheme.text }}

@@ -7,27 +7,22 @@ import NavFeature from "./mini-components/NavFeature";
 import {
   ChevronsRight,
   Github,
-  Handshake,
   Home,
   Linkedin,
   MailCheck,
   Menu,
-  MessageSquareText,
   Newspaper,
-  X,
 } from "lucide-react";
 import { ProfileData } from "@/constants/data";
 import { darkTheme } from "@/hooks/useTheme";
 import Sidebar from "./mini-components/Sidebar";
 import { auth } from "@/firebase/firebase";
-import { useRouter } from "next/navigation";
 import { setAdmin, setAllBlogs } from "@/store/slices/admin.slice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/store/store";
 import Image from "next/image";
 import MiniProfile from "./mini-components/MiniProfile";
 import MiniLogin from "./mini-components/MiniLogin";
-import { useAsyncDebounce } from "@/hooks/useDebounce";
 import { getBlogsByQuery } from "@/service/api";
 
 export const NavFeatures: NavFeaturesType[] = [
@@ -64,13 +59,11 @@ export const NavFeatures: NavFeaturesType[] = [
 ];
 
 const Navbar: React.FC = (): React.JSX.Element => {
-  const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   const author = useSelector((s: RootState) => s.admin.admin?.uid);
   const photo = useSelector((s: RootState) => s.admin.admin?.photoURL);
   const authOk: boolean = author && author.length !== 0 ? true : false;
   const [searchText, setSearchText] = useState<string>("");
-  const [theme, setTheme] = useState<"light" | "dark">("light");
   // const [navBehaviourSticky, setNavBehaviourSticky] = useState<boolean>(false);
   const [menuOpened, setMenuOpened] = useState<boolean>(false);
   const [profileOpened, setProfileOpened] = useState<boolean>(false);
@@ -91,22 +84,19 @@ const Navbar: React.FC = (): React.JSX.Element => {
   useEffect(() => {
     const setNewBlogResults = async () => {
       const res:{blogs:blogType[],noOfPages:string} = await getBlogsByQuery(searchText);
-      Array.isArray(res) && dispatch(setAllBlogs(res.blogs));
+      if(Array.isArray(res)) dispatch(setAllBlogs(res.blogs));
     };
     // useAsyncDebounce(() => setNewBlogResults());
     setNewBlogResults();
-  }, [searchText]);
+  }, [searchText,dispatch]);//
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (auth.currentUser) {
       dispatch(setAdmin(auth.currentUser));
     }
-  }, []);
+  }, [dispatch]); //
 
-  const onKeyDownSearch=()=>{
-    
-  }
   const handleCloseMenu = () => setMenuOpened(false);
   const handleCloseProfile = () => setProfileOpened(false);
   const handleCloseMiniLogin = () => setMiniLoginOpened(false);

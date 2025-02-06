@@ -1,7 +1,6 @@
 import {
   createUserWithEmailAndPassword,
   signInWithPopup,
-  signInWithRedirect,
   signOut,
 } from "firebase/auth";
 import { googleProvider, githubProvider, auth } from "../firebase.js";

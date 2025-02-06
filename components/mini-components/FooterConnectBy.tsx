@@ -2,15 +2,13 @@ import { ProfileData } from "@/constants/data";
 import { darkTheme } from "@/hooks/useTheme";
 import {
   CircleAlert,
-  Clipboard,
   ClipboardCheck,
   ClipboardCopy,
   Link2,
-  Pointer,
-  Sparkles,
 } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
 
 function FooterConnectBy() {
   const [hover, setHover] = useState<{
@@ -21,10 +19,18 @@ function FooterConnectBy() {
 
   const handleContactNumber = async () => {
     try {
-      !copied &&
-        (await navigator.clipboard.writeText(
+      if (!navigator.clipboard) {
+        toast.error("Your browser doesn't support copying to clipboard");
+        setTimeout(() => {
+          toast.info("Admin: Lets connect on WhatsApp: +91-9781295937👍.");
+        }, 3000);
+        return;
+      }
+      if (!copied) {
+        await navigator.clipboard.writeText(
           `${ProfileData.more.contact.contactNumber}`
-        ));
+        );
+      }
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (error) {
@@ -36,6 +42,14 @@ function FooterConnectBy() {
 
   return (
     <div className="flex flex-col gap-3 lg:px-3 px-0 lg:font-semibold font-normal">
+      <ToastContainer
+        stacked
+        autoClose={4000}
+        style={{ cursor: "grab" }}
+        draggable
+        theme="dark"
+        position="bottom-right"
+      />
       <div className="flex flex-row lg:flex-col lg:pl-6 pl-0 gap-1 justify-center pt-4">
         <div
           className="flex flex-col"
@@ -130,10 +144,12 @@ function FooterConnectBy() {
         <div className="font-bold text-sm border-t pt-2 text-center flex">
           <div className="flex">
             <div className="flex gap-1">
-              <span className=""><CircleAlert size={16}/></span>
+              <span className="">
+                <CircleAlert size={16} />
+              </span>
               {ProfileData.more.contact.disclamer}
             </div>
-          </div> 
+          </div>
         </div>
       </div>
     </div>

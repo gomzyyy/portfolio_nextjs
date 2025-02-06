@@ -2,12 +2,10 @@
 import { darkTheme } from "@/hooks/useTheme";
 import React, { useState } from "react";
 import Link from "next/link";
-import { NavFeaturesType } from "@/types";
 import FooterLink from "./mini-components/FooterLink";
 import { Copyright, Github, Linkedin } from "lucide-react";
 import { ProfileData } from "@/constants/data";
 import FooterConnectBy from "./mini-components/FooterConnectBy";
-import FooterNavigation from "./mini-components/FooterNavigation";
 import { NavFeatures } from "./Navbar";
 
 
@@ -81,7 +79,7 @@ function Footer() {
       </div>
 
       <div className="text-center flex flex-col items-center border-t w-[60%] pt-2">
-        <div className="flex justify-center"><pre>Portfolio • GomzyDhingra, </pre><div className="flex items-center"><pre>Copyright </pre><Copyright size={16}/><pre> 2025.</pre></div></div>
+        <div className="flex justify-center lg:text-sm text-xs"><pre>Portfolio • GomzyDhingra, </pre><div className="flex items-center"><pre>Copyright </pre><Copyright size={16}/><pre> 2025.</pre></div></div>
         <div className="px-12 pb-1 border-b w-fit"
         >Thanks for visiting</div>
       </div>

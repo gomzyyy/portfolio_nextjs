@@ -1,16 +1,15 @@
 "use client";
-import React, { useEffect, useRef, useState, useContext } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ProfileData } from "../constants/data";
 import { Button } from "./ui/button";
 import { ArrowRight, X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { lightTheme, darkTheme, comonColors } from "@/hooks/useTheme";
-import { themeColors } from "@/types";
+import { darkTheme, comonColors } from "@/hooks/useTheme";
 import Link from "next/link";
 import { toast } from "react-toastify";
 import { AppDispatch, RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
-import { setAdmin, setCount } from "@/store/slices/admin.slice";
+import { setAdmin } from "@/store/slices/admin.slice";
 import { auth } from "@/firebase/firebase";
 
 type profilePropType = {
@@ -31,16 +30,14 @@ const Profile:React.FC<profilePropType>=({showBtnHire=true,showBtnContact=true})
           dispatch(setAdmin(user));
         }
       } catch (error) {
-        console.log(error);
+        throw new Error(error instanceof Error ? error.message : "Unexpected error occured.")
       }
     };
     getAdminAfterLogin();
-  }, []);
+  }, [dispatch,admin]);//
 
   const [timer, setTimer] = useState<number>(5);
   const [redirecting, setRedirecting] = useState<boolean>(false);
-  const [colors, setColors] = useState<themeColors>(lightTheme);
-  const [theme, setTheme] = useState("light");
   const [hovered, setHovered] = useState<{
     h: boolean;
     r: boolean;
@@ -58,7 +55,7 @@ const Profile:React.FC<profilePropType>=({showBtnHire=true,showBtnContact=true})
   const timeOutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleTimer = (): void => {
-    timerRef.current && clearInterval(timerRef.current);
+    if(timerRef.current) clearInterval(timerRef.current);
     counterRef.current = 5;
     timerRef.current = setInterval(() => {
       setTimer((prev) => prev - 1);
@@ -93,7 +90,7 @@ const Profile:React.FC<profilePropType>=({showBtnHire=true,showBtnContact=true})
     if (timeOutRef.current) {
       toast.warn("You have canceled hiring.");
       clearTimeout(timeOutRef.current);
-      timerRef.current && clearTimeout(timerRef.current);
+      if(timerRef.current) clearTimeout(timerRef.current);
       setRedirecting(false);
       counterRef.current = 5;
       setTimer(5);
@@ -101,17 +98,14 @@ const Profile:React.FC<profilePropType>=({showBtnHire=true,showBtnContact=true})
   };
 
   useEffect(() => {
-    theme === "dark" ? setColors(darkTheme) : setColors(lightTheme);
     if (typeof window !== "undefined") {
       setRedirecting(false);
     }
     return () => {
-      timerRef.current && clearInterval(timerRef.current);
-      timeOutRef.current && clearTimeout(timeOutRef.current);
+    if(timerRef.current) clearInterval(timerRef.current);
+      if(timeOutRef.current) clearTimeout(timeOutRef.current);
     };
-  }, [theme]);
-
-  const handlePlusCount = () => dispatch(setCount());
+  }, []);
 
   return (
     <div

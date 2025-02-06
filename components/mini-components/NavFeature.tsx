@@ -5,7 +5,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 
-type NavFeatureProps = { f: NavFeaturesType; click: () => any};
+type NavFeatureProps = { f: NavFeaturesType; click: () => void};
 
 const NavFeature: React.FC<NavFeatureProps> = ({
   f

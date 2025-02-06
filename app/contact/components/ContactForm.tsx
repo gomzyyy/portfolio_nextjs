@@ -4,7 +4,13 @@ import { darkTheme } from "@/hooks/useTheme";
 import { createRequest } from "@/service/api";
 import { contactSchema } from "@/service/zod";
 import { RootState } from "@/store/store";
-import { Field, Form, Formik, useFormikContext } from "formik";
+import {
+  Field,
+  Form,
+  Formik,
+  useFormikContext,
+  FormikContextType,
+} from "formik";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -12,7 +18,7 @@ import { toFormikValidationSchema } from "zod-formik-adapter";
 
 const ContactForm = (): React.JSX.Element => {
   const [loading, setLoading] = useState<boolean>(false);
-  const author: any = useSelector((s: RootState) => s.admin.admin);
+  const author = useSelector((s: RootState) => s.admin.admin);
 
   return (
     <Formik
@@ -40,10 +46,15 @@ const ContactForm = (): React.JSX.Element => {
         }
         const sendRequest = async () => {
           const res = await createRequest(data, setLoading);
-          res.success ? toast.success(res.message) : toast.error(res.message);
-          setTimeout(() => {
-            toast.info("Admin will reach you through the request soon✅");
-          }, 3000);
+          if (res.success) {
+            toast.success(res.message);
+            setTimeout(() => {
+              toast.info("Admin will reach you through the request soon✅");
+            }, 3000);
+            return;
+          } else {
+            toast.error(res.message);
+          }
         };
         sendRequest();
       }}
@@ -212,12 +223,22 @@ const ContactForm = (): React.JSX.Element => {
   );
 };
 
-type ErrorProps = {
+type FormValues = {
   name: string;
+  email: string;
+  countryCode: string;
+  number: string;
+  socialHandleUrl: string;
+  socialHandleUrlType: string;
+  message: string;
+};
+
+type ErrorProps = {
+  name: keyof FormValues;
 };
 
 const Error: React.FC<ErrorProps> = ({ name }) => {
-  const { errors, touched } = useFormikContext<any>();
+  const { errors, touched }: FormikContextType<FormValues> = useFormikContext();
   const errorMessage = errors[name] ? (errors[name] as string) : "";
   return (
     <div>

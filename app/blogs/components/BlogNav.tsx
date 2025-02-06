@@ -1,8 +1,7 @@
 import { darkTheme } from "@/hooks/useTheme";
-import { CirclePlus, Plus } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { CirclePlus } from "lucide-react";
+import React, { useState } from "react";
 import CreateBlog from "./CreateBlog";
-import { auth } from "@/firebase/firebase";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";

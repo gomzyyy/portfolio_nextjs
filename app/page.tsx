@@ -16,7 +16,7 @@ export default function Home() {
     if (auth.currentUser) {
       dispatch(setAdmin(auth.currentUser));
     }
-  }, [auth.currentUser]);
+  }, [dispatch]); //
   return (
     <ReduxProvider>
       <div className="flex flex-col lg:px-10 px-0 pb-6 pt-10">

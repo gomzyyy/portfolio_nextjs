@@ -1,3 +1,4 @@
+import { r } from "../../constants/responses.js";
 import { blogs } from "../../constants/serverData.js";
 import { Blog } from "../../models/blog.js";
 export const getAllBlogs = async (req, res) => {
@@ -15,7 +16,13 @@ export const getAllBlogs = async (req, res) => {
       noOfPages: Math.floor(blogs.length / 10),
     });
   } catch (error) {
-    console.log(error);
+    return res.status(r.INTERNAL_SERVER_ERROR.code).json({
+      message:
+        error instanceof Error
+          ? error.message
+          : r.INTERNAL_SERVER_ERROR.message,
+      success: false,
+    });
   }
 };
 export const getBlogById = async (req, res) => {
@@ -30,7 +37,13 @@ export const getBlogById = async (req, res) => {
       blog: blogById,
     });
   } catch (error) {
-    console.log(error);
+    return res.status(r.INTERNAL_SERVER_ERROR.code).json({
+      message:
+        error instanceof Error
+          ? error.message
+          : r.INTERNAL_SERVER_ERROR.message,
+      success: false,
+    });
   }
 };
 
@@ -55,6 +68,12 @@ export const getBlogByQuery = async (req, res) => {
       noOfPages: Math.floor(blogsByQuery.length / 10),
     });
   } catch (error) {
-    console.log(error);
+    return res.status(r.INTERNAL_SERVER_ERROR.code).json({
+      message:
+        error instanceof Error
+          ? error.message
+          : r.INTERNAL_SERVER_ERROR.message,
+      success: false,
+    });
   }
 };

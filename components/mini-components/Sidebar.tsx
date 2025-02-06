@@ -5,8 +5,8 @@ import { LogIn, LogOut, Search } from "lucide-react";
 import { NavFeatures } from "../Navbar";
 import Link from "next/link";
 import SideBarFeature from "./sub-components/sideBarFeature";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/store/store";
+import { useDispatch } from "react-redux";
+import { AppDispatch} from "@/store/store";
 import Image from "next/image";
 import { auth } from "@/firebase/firebase";
 import { removeAdmin } from "@/store/slices/admin.slice";
@@ -14,7 +14,6 @@ import { signOut } from "firebase/auth";
 
 function Sidebar({ close }: { close: () => void }) {
   const dispatch = useDispatch<AppDispatch>();
-  const admin = useSelector((s: RootState) => s.admin.admin);
   const [searchText, setSearchText] = useState<string>("");
   const [hovered, setHovered] = useState<{
     searchBtn?: boolean;

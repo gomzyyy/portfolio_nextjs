@@ -1,6 +1,6 @@
 import { darkTheme } from "@/hooks/useTheme";
 import { NavFeaturesType } from "@/types";
-import { ArrowRight, Link2 } from "lucide-react";
+import { Link2 } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
 

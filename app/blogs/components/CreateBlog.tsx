@@ -84,9 +84,10 @@ function CreateBlog({ close }: { close: () => void }) {
         },
         tags: tags.split(",").map((s) => s.trim()),
       };
-      const res = await createBlog(blogTypeData);
+      // const res = 
+      await createBlog(blogTypeData);
     } catch (error) {
-      throw new Error("Error occured while creating blog.");
+      throw new Error( error instanceof Error ? error.message : "Error occured while creating blog.");
     }
   };
 
@@ -195,7 +196,7 @@ function CreateBlog({ close }: { close: () => void }) {
                 {window.screen.width > 500 && (
                   <div className="flex flex-col gap-4 mt-9 w-fit max-w-[300px]">
                     {blogRules.map((s, i) => (
-                      <span key={s.id} className="text-sm">
+                      <span key={i} className="text-sm">
                         * {s.rule}
                       </span>
                     ))}

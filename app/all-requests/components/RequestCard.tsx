@@ -3,7 +3,7 @@ import React from "react";
 
 const RequestCard: React.FC<{ request: requestType }> = ({ request }) => {
   return (
-    <div className="bg-[#1E1E1E] text-white rounded-2xl p-6 shadow-lg border border-gray-700 w-fit min-w-[300px]">
+    <div className="bg-[#1E1E1E] text-white rounded-2xl p-6 shadow-lg border border-gray-700 w-fit min-h-[190px] min-w-[300px]">
       <h2 className="text-xl font-semibold text-[#FFD700]">{request.name}</h2>
       <p className="text-sm text-gray-400">{request.email}</p>
 

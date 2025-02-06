@@ -21,7 +21,7 @@ app.use(cors(corsOptions));
 app.use("/", routes);
 
 // server
-app.listen(PORT, () => {
+app.listen(PORT,"0.0.0.0", () => {
   console.log(`server working at http://localhost:${PORT}/`);
   console.log(`get blogs at http://localhost:${PORT}/get/blogs`);
   connectDB();

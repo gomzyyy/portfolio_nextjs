@@ -2,16 +2,14 @@ import { auth, googleProvider } from "@/firebase/firebase";
 import { darkTheme } from "@/hooks/useTheme";
 import Image from "next/image";
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setAdmin } from "../../store/slices/admin.slice";
-import { LogIn, LogOut, X } from "lucide-react";
-import { AppDispatch, RootState } from "@/store/store";
+import { LogIn, X } from "lucide-react";
+import { AppDispatch } from "@/store/store";
 import { signInWithPopup } from "firebase/auth";
-import { loginWithGithub } from "@/firebase/service/service";
 
 function MiniLogin({ close }: { close: () => void }) {
   const dispatch = useDispatch<AppDispatch>();
-  const admin = useSelector((s: RootState) => s.admin.admin);
   const [hover, setHover] = useState<{ logout: boolean }>({ logout: false });
 
   const handleLoginThroughGoogle = async () => {
@@ -19,9 +17,9 @@ function MiniLogin({ close }: { close: () => void }) {
     dispatch(setAdmin(auth.currentUser));
     close();
   };
-  const handleLoginThroughGithub = async () => {
-    await loginWithGithub();
-  };
+  // const handleLoginThroughGithub = async () => {
+  //   await loginWithGithub();
+  // };
 
   return (
     <div>

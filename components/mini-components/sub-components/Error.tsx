@@ -1,13 +1,18 @@
 import React from "react";
 import { useFormikContext } from "formik";
 
-type ErrorProps = {
+type FormValues = {
   name: string;
+  email: string;
 };
 
-const Error: React.FC<ErrorProps> = ({ name }):React.JSX.Element => {
-  const { errors, touched } = useFormikContext<any>();
-  return <>{ errors[name] && touched[name] ? <span></span> : null}</>;
+type ErrorProps = {
+  name: keyof FormValues;
+};
+
+const Error: React.FC<ErrorProps> = ({ name }): React.JSX.Element => {
+  const { errors, touched } = useFormikContext<FormValues>();
+  return <>{errors[name] && touched[name] ? <span>{errors[name]}</span> : null}</>;
 };
 
 export default Error;

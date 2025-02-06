@@ -1,16 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { darkTheme } from "@/hooks/useTheme";
 import { ToastContainer } from "react-toastify";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
 import ContactForm from "./components/ContactForm";
 import ContactProfile from "./components/ContactProfile";
 import ContactMediaLinks from "./components/ContactMediaLinks";
 
 function Contact() {
-  const [loading, setLoading] = useState<boolean>(false);
-  const author: any = useSelector((s: RootState) => s.admin.admin);
 
   return (
     <div className="select-none smooth">

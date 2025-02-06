@@ -6,9 +6,6 @@ import { darkTheme } from "@/hooks/useTheme";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import SingleBlog from "@/components/mini-components/Blog";
-import { auth } from "@/firebase/firebase";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
 import BlogNav from "./components/BlogNav";
 
 type fetchBlogsRes = {
@@ -19,15 +16,16 @@ type fetchBlogsRes = {
 function Blog() {
   const query = useSearchParams();
   const pageNumber = Number(query.get("page"));
-  const allBlogs = useSelector((s: RootState) => s.admin.allBlogs);
   const [result, setResult] = useState<blogType[]>([]);
   const [noOfPages, setNoOfPages] = useState<number[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(pageNumber ?? 1);
+  // const [currentPage, setCurrentPage] = useState<number>(pageNumber ?? 1);
 
   useEffect(() => {
     const fetchBlogs = async () => {
       const res: fetchBlogsRes = await getBlogs(pageNumber);
-      Array.isArray(res.blogs) && setResult(res.blogs ?? []);
+      if (Array.isArray(res.blogs)) {
+        setResult(res.blogs ?? []);
+      }
       const arr = Array.from({ length: res.noOfPages }, (_, i) => i + 1);
       setNoOfPages(arr);
     };

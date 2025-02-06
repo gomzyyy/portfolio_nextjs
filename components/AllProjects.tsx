@@ -1,9 +1,6 @@
 import React from "react";
 import { myProjects } from "@/constants/data";
 import { darkTheme } from "@/hooks/useTheme";
-import Image from "next/image";
-import { Github } from "lucide-react";
-import Link from "next/link";
 import Project from "./mini-components/Project";
 
 function AllProjects() {
