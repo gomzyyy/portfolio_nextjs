@@ -3,10 +3,24 @@ import { r } from "../../../../constants/responses.js";
 import { Author } from "@/models/author";
 import { Contact } from "@/models/contact.js";
 import { connectDB } from "../../../../db/mongoDb";
+import { checkIfAuthorized } from "@/service/test.js";
 
-connectDB()
+connectDB();
 export async function POST(request: Request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const auth = searchParams.get("auth");
+    const isAuthenticated = checkIfAuthorized(auth);
+    if (!isAuthenticated) {
+      return NextResponse.json(
+        {
+          message: "This is an unauthorized action.",
+          success: false,
+          requests: [],
+        },
+        { status: r.UNAUTHORIZED.code }
+      );
+    }
     const {
       name,
       email,

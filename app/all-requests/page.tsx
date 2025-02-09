@@ -23,7 +23,7 @@ function AllRequests() {
     }
     const fetchRequests = async () => {
       try {
-        const res = await getAllRequests(authorId, pageNumber);
+        const res = await getAllRequests(authorId, process.env.NEXT_PUBLIC_AUTH_KEY, pageNumber);
         setRequests(res.requests);
       } catch (error) {
         throw new Error(

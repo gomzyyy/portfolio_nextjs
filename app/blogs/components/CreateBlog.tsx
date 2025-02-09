@@ -84,10 +84,20 @@ function CreateBlog({ close }: { close: () => void }) {
         },
         tags: tags.split(",").map((s) => s.trim()),
       };
-      // const res = 
-      await createBlog(blogTypeData);
+      // const res =
+      await createBlog(process.env.NEXT_PUBLIC_AUTH_KEY,blogTypeData);
+      setTitle("");
+      setTags("");
+      setContent("");
+      setThumbnail("");
+      setCategory("");
+      close();
     } catch (error) {
-      throw new Error( error instanceof Error ? error.message : "Error occured while creating blog.");
+      throw new Error(
+        error instanceof Error
+          ? error.message
+          : "Error occured while creating blog."
+      );
     }
   };
 

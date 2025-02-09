@@ -27,7 +27,7 @@ function Blog() {
   useEffect(() => {
     const fetchBlogs = async () => {
       setLoading(true);
-      const res: fetchBlogsRes = await getBlogs(pageNumber);
+      const res: fetchBlogsRes = await getBlogs(process.env.NEXT_PUBLIC_AUTH_KEY,pageNumber);
       if (Array.isArray(res.blogs)) {
         setResult(res.blogs ?? []);
       }

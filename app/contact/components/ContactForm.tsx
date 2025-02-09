@@ -45,7 +45,7 @@ const ContactForm = (): React.JSX.Element => {
           return;
         }
         const sendRequest = async () => {
-          const res = await createRequest(data, setLoading);
+          const res = await createRequest(process.env.NEXT_PUBLIC_AUTH_KEY,data, setLoading);
           if (res.success) {
             toast.success(res.message);
             setTimeout(() => {

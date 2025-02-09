@@ -1,10 +1,11 @@
 
-export const baseUrl = `https://portfolio-nextjs-five-flax.vercel.app/`
+export const baseUrl = `https://portfolio-nextjs-five-flax.vercel.app`
+// export const baseUrl = `http://192.168.1.66:3000`
 
-export const getBlogs = async (page = 1, limit = 5) => {
+export const getBlogs = async (authId,page = 1, limit = 5) => {
   try {
     const response = await fetch(
-      `https://portfolio-nextjs-five-flax.vercel.app/api/blogs?page=${page}&limit=${limit}`,
+      `${baseUrl}/api/blogs?page=${page}&limit=${limit}&auth=${authId}`,
       { method: "GET" }
     );
     if (!response.ok) {
@@ -65,9 +66,9 @@ export const getBlogsById = async (query) => {
     );
   }
 };
-export const createBlog = async (data) => {
+export const createBlog = async (authId,data) => {
   try {
-    const response = await fetch(`http://localhost:8000/post/blog/`, {
+    const response = await fetch(`${baseUrl}/api/blog/create?auth=${authId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -83,16 +84,15 @@ export const createBlog = async (data) => {
     );
   }
 };
-export const createRequest = async (data, setLoading) => {
+export const createRequest = async (authId,data, setLoading) => {
   try {
     setLoading(true);
-    console.log("Requ");
     if (!data.name || !data.email) {
       alert("some required fields are missing.");
       return;
     }
     const response = await fetch(
-      `https://portfolio-nextjs-five-flax.vercel.app/api/contact/send`,
+      `${baseUrl}/api/contact/send?auth=${authId}`,
       {
         method: "POST",
         headers: {
@@ -112,10 +112,10 @@ export const createRequest = async (data, setLoading) => {
     setLoading(false);
   }
 };
-export const getAllRequests = async (id, pageNumber, limit = 20) => {
+export const getAllRequests = async (id, authId, pageNumber, limit = 20) => {
   try {
     const response = await fetch(
-      `https://portfolio-nextjs-five-flax.vercel.app/api/contact/get?id=${id}`
+      `${baseUrl}/api/contact/get?id=${id}&auth=${authId}`
     );
 
     const res = await response.json();

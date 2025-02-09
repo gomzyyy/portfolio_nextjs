@@ -1,13 +1,25 @@
 import { NextResponse } from "next/server";
 import { r } from "../../../../constants/responses.js";
 import { Contact } from "@/models/contact.js";
-import { checkAdminById } from "../../../../service/test.js";
+import { checkAdminById, checkIfAuthorized } from "../../../../service/test.js";
 import { connectDB } from "../../../../db/mongoDb";
 
 connectDB();
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
+    const auth = searchParams.get("auth");
+    const isAuthenticated = checkIfAuthorized(auth);
+    if (!isAuthenticated) {
+      return NextResponse.json(
+        {
+          message: "This is an unauthorized action.",
+          success: false,
+          requests: [],
+        },
+        { status: r.UNAUTHORIZED.code }
+      );
+    }
     const id = searchParams.get("id");
     const adminOk = checkAdminById(id);
     if (!adminOk) {
