@@ -64,8 +64,8 @@ const Navbar: React.FC = (): React.JSX.Element => {
   const photo = useSelector((s: RootState) => s.admin.admin?.photoURL);
   const authOk: boolean = author && author.length !== 0 ? true : false;
   const [searchText, setSearchText] = useState<string>("");
-  // const [navBehaviourSticky, setNavBehaviourSticky] = useState<boolean>(false);
   const [menuOpened, setMenuOpened] = useState<boolean>(false);
+  const [opened, setOpened] = useState<boolean>(false);
   const [profileOpened, setProfileOpened] = useState<boolean>(false);
   const [miniLoginOpened, setMiniLoginOpened] = useState<boolean>(false);
 
@@ -83,12 +83,15 @@ const Navbar: React.FC = (): React.JSX.Element => {
 
   useEffect(() => {
     const setNewBlogResults = async () => {
-      const res:{blogs:blogType[],noOfPages:string} = await getBlogsByQuery(searchText);
-      if(Array.isArray(res)) dispatch(setAllBlogs(res.blogs));
+      if (searchText.trim().length !== 0) {
+        const res: { blogs: blogType[]; noOfPages: string } =
+          await getBlogsByQuery(searchText);
+        if (Array.isArray(res)) dispatch(setAllBlogs(res.blogs));
+      }
+      return;
     };
-    // useAsyncDebounce(() => setNewBlogResults());
     setNewBlogResults();
-  }, [searchText,dispatch]);//
+  }, [searchText, dispatch]); //
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -97,7 +100,22 @@ const Navbar: React.FC = (): React.JSX.Element => {
     }
   }, [dispatch]); //
 
-  const handleCloseMenu = () => setMenuOpened(false);
+  const handleCloseMenu = () => {
+    setOpened(false);
+    setTimeout(() => {
+      setMenuOpened(false);
+    }, 200);
+  };
+  const toogleMenuOpen = () => {
+    setOpened((p) => (p = !p));
+    setMenuOpened((p) => (p = !p));
+  };
+  const toogleMenuClose = () => {
+    setOpened((p) => (p = !p));
+    setTimeout(() => {
+      setMenuOpened((p) => (p = !p));
+    }, 200);
+  };
   const handleCloseProfile = () => setProfileOpened(false);
   const handleCloseMiniLogin = () => setMiniLoginOpened(false);
 
@@ -112,7 +130,13 @@ const Navbar: React.FC = (): React.JSX.Element => {
         backgroundColor: darkTheme.rootBg,
       }}
     >
-      {menuOpened && <Sidebar close={handleCloseMenu} />}
+      {menuOpened && (
+        <Sidebar
+          close={handleCloseMenu}
+          opened={opened}
+          setOpened={setOpened}
+        />
+      )}
 
       <div className="flex cursor-pointer">
         <Link href={"/"} className="flex flex-col">
@@ -208,14 +232,10 @@ const Navbar: React.FC = (): React.JSX.Element => {
             <ChevronsRight
               size={30}
               className="ml-1"
-              onClick={() => setMenuOpened(false)}
+              onClick={toogleMenuClose}
             />
           ) : (
-            <Menu
-              size={30}
-              className="ml-1"
-              onClick={() => setMenuOpened(true)}
-            />
+            <Menu size={30} className="ml-1" onClick={toogleMenuOpen} />
           )}
         </div>
       </div>

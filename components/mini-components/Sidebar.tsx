@@ -6,13 +6,23 @@ import { NavFeatures } from "../Navbar";
 import Link from "next/link";
 import SideBarFeature from "./sub-components/sideBarFeature";
 import { useDispatch } from "react-redux";
-import { AppDispatch} from "@/store/store";
+import { AppDispatch } from "@/store/store";
 import Image from "next/image";
 import { auth } from "@/firebase/firebase";
 import { removeAdmin } from "@/store/slices/admin.slice";
 import { signOut } from "firebase/auth";
 
-function Sidebar({ close }: { close: () => void }) {
+type sidebarPropType = {
+  close: () => void;
+  opened: boolean;
+  setOpened: (arg:boolean) => void;
+};
+
+const Sidebar: React.FC<sidebarPropType> = ({
+  close,
+  opened,
+  setOpened,
+}): React.JSX.Element => {
   const dispatch = useDispatch<AppDispatch>();
   const [searchText, setSearchText] = useState<string>("");
   const [hovered, setHovered] = useState<{
@@ -24,6 +34,13 @@ function Sidebar({ close }: { close: () => void }) {
     login: false,
     logout: false,
   });
+
+  const handleToogleSidebar = () => {
+    setOpened(false);
+    setTimeout(() => {
+      close();
+    }, 300);
+  };
 
   const logout = async () => {
     try {
@@ -43,17 +60,18 @@ function Sidebar({ close }: { close: () => void }) {
   };
 
   return (
-    <div className="flex h-screen w-[100%] xl:hidden absolute z-50 bg-[rgba(0,0,0,0.6)] top-16 right-0 justify-end select-none">
-      <div
-        className="flex-1 flex justify-center"
-        onClick={() => close()}
-      >
+    <div className="flex h-screen w-[100%] xl:hidden absolute z-50 bg-[rgba(0,0,0,0.6)] top-16 right-0 justify-end select-none smooth-render-slow2">
+      <div className="flex-1 flex justify-center" onClick={handleToogleSidebar}>
         <span className="text-center mt-3 text-xl">Tap anywhere to close.</span>
       </div>
       <div
-        className="h-ful w-[30%] min-w-[220px] max-w-[320px] px-3 py-4 flex flex-col justify-between pb-36 sm:pb-20"
+        className={`h-full w-[30%] lg:min-w-px min-w-[220px] max-w-[320px] px-3 py-4 flex flex-col justify-between pb-36 sm:pb-20 smooth-sidebar-${
+          opened ? "open" : "close"
+        } overflow-auto`}
         style={{ backgroundColor: darkTheme.rootBg }}
       >
+        {/* min-w-[220px] */}
+        {/* <div> */}
         <div className="flex flex-col gap-3 mt-1">
           <div className="flex items-center gap-2 px-1">
             <Image
@@ -63,9 +81,11 @@ function Sidebar({ close }: { close: () => void }) {
               alt=""
               className="rounded-full"
             />
-            <span>{auth?.currentUser?.displayName ?? "Anonymous User"}</span>
+            <span className="text-nowrap">
+              {auth?.currentUser?.displayName ?? "Anonymous User"}
+            </span>
           </div>
-          <div className="border rounded-xl relative">
+          <div className="border rounded-xl relative min-w-[160px]">
             <Input
               placeholder="Search blog..."
               value={searchText}
@@ -131,9 +151,10 @@ function Sidebar({ close }: { close: () => void }) {
             </div>
           )}
         </div>
+        {/* </div> */}
       </div>
     </div>
   );
-}
+};
 
 export default Sidebar;

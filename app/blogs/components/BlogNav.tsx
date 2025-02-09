@@ -6,30 +6,24 @@ import Link from "next/link";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 
-function BlogNav() {
+type BlogNavType={
+  openCreateScreen:boolean;
+  setOpenCreateScreen:(state:boolean)=>void
+}
+
+const BlogNav:React.FC<BlogNavType>=({openCreateScreen,setOpenCreateScreen}):React.JSX.Element=> {
   const [hover, setHover] = useState<{ icon?: boolean; create?: boolean }>({
     icon: false,
     create: false,
   });
   const author = useSelector((s: RootState) => s.admin.admin?.uid);
   const authOk: boolean = author && author.length !== 0 ? true : false;
-  // const [navBehaviourSticky, setNavBehaviourSticky] = useState<boolean>(false);
-  const [openCreateScreen, setOpenCreateScreen] = useState<boolean>(false);
-
-  // useEffect(() => {
-  //   const handleNavBehaviour = () => {
-  //     window.scrollY > 400
-  //       ? setNavBehaviourSticky(true)
-  //       : setNavBehaviourSticky(false);
-  //   };
-  //   window.addEventListener("scroll", handleNavBehaviour);
-  // });
 
   const handleCloseCreateScreen = () => setOpenCreateScreen(false);
 
   return (
     <nav
-      className="h-16 flex flex-col px-10 font-bold items-center justify-between nav-smooth w-full select-none smooth-render-fast"
+      className="h-14 flex flex-col px-10 font-bold items-center justify-between nav-smooth w-full select-none smooth-render-fast"
       style={{
         color: darkTheme.text,
         backgroundColor: darkTheme.rootBg,

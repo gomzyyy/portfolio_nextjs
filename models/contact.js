@@ -1,13 +1,14 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
+const { Schema, models } = mongoose;
 
 const contactSchema = new Schema({
   name: {
     type: String,
     required: true,
   },
-  author:{
-type:mongoose.Schema.Types.ObjectId,
-ref:"Author"
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Author",
   },
   email: {
     type: String,
@@ -29,4 +30,4 @@ ref:"Author"
     type: String,
   },
 });
-export const Contact = mongoose.model("Contact", contactSchema);
+export const Contact = models.Contact || mongoose.model("Contact", contactSchema);

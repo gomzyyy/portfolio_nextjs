@@ -1,20 +1,22 @@
 import { baseUrl_get } from "../constants/serverData";
 
-const url = "https://portfolio-nextjs-9jaj0k19c-gomzy-dhingras-projects.vercel.app/"
+const url =
+  "https://portfolio-nextjs-9jaj0k19c-gomzy-dhingras-projects.vercel.app/";
 
-export const getBlogs = async (page = 1, limit = 10) => {
+export const getBlogs = async (page = 1, limit = 5) => {
   try {
     const response = await fetch(
-      `${url}api/blogs?page=${page}&limit=${limit}`,
+      `http://192.168.1.66:3000/api/blogs?page=${page}&limit=${limit}`,
       { method: "GET" }
     );
-
+    console.log(response);
     if (!response.ok) {
-      return (res = {
+      const res = {
         message: "Internal server error.",
         blogs: [],
         noOfPages: 0,
-      });
+      };
+      return res;
     }
     const data = await response.json();
     return data;
@@ -84,16 +86,16 @@ export const createBlog = async (data) => {
     );
   }
 };
-export const createRequest = async (data,setLoading) => {
+export const createRequest = async (data, setLoading) => {
   try {
-    setLoading(true)
-    console.log("Requ")
+    setLoading(true);
+    console.log("Requ");
     if (!data.name || !data.email) {
       alert("some required fields are missing.");
       return;
     }
     const response = await fetch(
-      `http://localhost:8000/post/connection-request/`,
+      `http://192.168.1.66:3000/api/contact/send`,
       {
         method: "POST",
         headers: {
@@ -108,15 +110,15 @@ export const createRequest = async (data,setLoading) => {
     const res = await response.json();
     return res;
   } catch (error) {
-    return error instanceof Error ? error.message : "Unable to send request."
-  }finally{
-    setLoading(false)
+    return error instanceof Error ? error.message : "Unable to send request.";
+  } finally {
+    setLoading(false);
   }
 };
-export const getAllRequests = async (id,pageNumber,limit=20) => {
+export const getAllRequests = async (id, pageNumber, limit = 20) => {
   try {
     const response = await fetch(
-      `http://localhost:8000/get/connection-requests?id=${id}&page=${pageNumber}&limit=${limit}`
+      `http://192.168.1.66:3000/api/contact/get?id=${id}`
     );
 
     const res = await response.json();
@@ -130,4 +132,3 @@ export const getAllRequests = async (id,pageNumber,limit=20) => {
     throw new Error(error.message || "Unable to send request.");
   }
 };
-

@@ -122,16 +122,16 @@ input[type="number"]::-webkit-outer-spin-button {
   animation: smooth-render 0.4s ease-in;
 }
 .smooth-render-slow2 {
-  animation: smooth-render 0.4s ease-in;
+  animation: smooth-render 0.5s ease-in;
 }
 .smooth-render-slow3 {
-  animation: smooth-render 0.4s ease-in;
+  animation: smooth-render 0.6s ease-in;
 }
 .smooth-render-slow4 {
-  animation: smooth-render 0.4s ease-in;
+  animation: smooth-render 0.7s ease-in;
 }
 .smooth-render-slow5 {
-  animation: smooth-render 0.4s ease-in;
+  animation: smooth-render 0.8s ease-in;
 }
 @keyframes smooth-render {
   0% {
@@ -139,5 +139,31 @@ input[type="number"]::-webkit-outer-spin-button {
   }
   100% {
     opacity: 1;
+  }
+}
+.smooth-sidebar-open {
+  animation: smooth-width-open 0.2s linear forwards;
+}
+@keyframes smooth-width-open {
+  0% {
+    width: 0px;
+    opacity: 0;
+  }
+  100% {
+    width: 30%;
+    opacity: 1;
+  }
+}
+.smooth-sidebar-close {
+  animation: smooth-width-close 0.2s linear forwards;
+}
+@keyframes smooth-width-close {
+  0% {
+    width: 30%;
+    opacity: 1;
+  }
+  100% {
+    width: 0px;
+    opacity: 0;
   }
 }

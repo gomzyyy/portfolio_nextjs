@@ -10,7 +10,7 @@ function SingleBlog({ s }: { s: blogType }) {
   const blogByAdmin: boolean = s.author.authorId === author ? true : false;
 
   return (
-    <div className="scrollbar-hidden border p-4 h-fit max-h-[600px] max-w-[00px] w-full rounded-xl flex flex-col gap-6 items-center min-w-[100%] min-h-[280px]">
+    <div className="scrollbar-hidden border p-4 h-fit max-h-[600px] max-w-[600px] w-full rounded-xl flex flex-col gap-6 items-center min-h-[280px]">
       <div className="w-full max-w-[561px] h-auto flex justify-center overflow-hidden rounded-lg">
         <Image
           src={s.thumbnail}
