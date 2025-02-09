@@ -1,15 +1,12 @@
-import { baseUrl_get } from "../constants/serverData";
 
-const url =
-  "https://portfolio-nextjs-9jaj0k19c-gomzy-dhingras-projects.vercel.app/";
+export const baseUrl = `https://portfolio-nextjs-five-flax.vercel.app/`
 
 export const getBlogs = async (page = 1, limit = 5) => {
   try {
     const response = await fetch(
-      `http://192.168.1.66:3000/api/blogs?page=${page}&limit=${limit}`,
+      `https://portfolio-nextjs-five-flax.vercel.app/api/blogs?page=${page}&limit=${limit}`,
       { method: "GET" }
     );
-    console.log(response);
     if (!response.ok) {
       const res = {
         message: "Internal server error.",
@@ -95,7 +92,7 @@ export const createRequest = async (data, setLoading) => {
       return;
     }
     const response = await fetch(
-      `http://192.168.1.66:3000/api/contact/send`,
+      `https://portfolio-nextjs-five-flax.vercel.app/api/contact/send`,
       {
         method: "POST",
         headers: {
@@ -118,7 +115,7 @@ export const createRequest = async (data, setLoading) => {
 export const getAllRequests = async (id, pageNumber, limit = 20) => {
   try {
     const response = await fetch(
-      `http://192.168.1.66:3000/api/contact/get?id=${id}`
+      `https://portfolio-nextjs-five-flax.vercel.app/api/contact/get?id=${id}`
     );
 
     const res = await response.json();

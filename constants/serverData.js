@@ -1,5 +1,3 @@
-export const baseUrl_get=`http://localhost:8000/get`
-export const baseUrl_post=`http://localhost:8000/post`
 
 export const blogs = [
   {
