@@ -93,7 +93,7 @@ export const POST = async (request: Request) => {
     );
   } catch (error) {
     return NextResponse.json(
-      { message: r.INTERNAL_SERVER_ERROR.message, success: false },
+      { message: error instanceof Error ? error.message : r.INTERNAL_SERVER_ERROR.message, success: false },
       { status: r.INTERNAL_SERVER_ERROR.code }
     );
   }
