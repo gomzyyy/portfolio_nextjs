@@ -1,10 +1,10 @@
 import { darkTheme } from "@/hooks/useTheme";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 type ForwardBackwardBlogBtnsType = {
-  onForward?: () => any;
-  onBackward?: () => any;
+  onForward?: () => void;
+  onBackward?: () => void;
 };
 
 const ForwardBackwardButtons: React.FC<ForwardBackwardBlogBtnsType> = ({

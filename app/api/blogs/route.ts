@@ -13,7 +13,7 @@ export const GET = async (request: Request) => {
     const limit = parseInt(limitParam ?? "10");
     const startIndex = (page - 1) * limit;
     const endIndex = startIndex + limit;
-    const authors = await Author.find();
+    await Author.find();
     const allBlogs = await Blog.find().populate("author");
     const paginatedBlogs = allBlogs.slice(startIndex, endIndex);
 
